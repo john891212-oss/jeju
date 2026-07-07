@@ -1,6 +1,8 @@
 # 비밀키 — 절대 커밋 금지
 .env
 config.py
+# 로컬 프론트 프로토타입 (API 키 하드코딩됨 — 절대 커밋 금지)
+app/*.html
 
 # 데이터 (golden·mock 제외 — 수작업/뼈대 자산은 커밋)
 data/raw/
