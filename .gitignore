@@ -2,11 +2,12 @@
 .env
 config.py
 
-# 데이터 (golden 제외 — 수작업 자산은 커밋)
+# 데이터 (golden·mock 제외 — 수작업/뼈대 자산은 커밋)
 data/raw/
 data/processed/
 *.json
 !data/golden/*.json
+!data/mock/*.json
 
 # 파이썬
 __pycache__/

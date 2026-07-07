@@ -1,0 +1,11 @@
+# Jeju POP Trail — 다크 스테이지 테마 (K-POP 앨범 컨셉)
+[theme]
+base = "dark"
+primaryColor = "#ff4d94"            # 네온 핑크 (포인트/버튼)
+backgroundColor = "#0e0b16"         # 다크 스테이지
+secondaryBackgroundColor = "#1a1626"
+textColor = "#f0eef5"
+font = "sans serif"
+
+[server]
+headless = true
