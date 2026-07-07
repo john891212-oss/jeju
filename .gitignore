@@ -19,3 +19,6 @@ venv/
 
 # 벡터DB (빌드 시 생성)
 chroma_db/
+
+# 로컬 카카오 키 주입 (각자 .env 로 생성, 절대 커밋 금지)
+web/config.local.js

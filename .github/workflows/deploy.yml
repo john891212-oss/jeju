@@ -2,9 +2,14 @@
 # TODO: GCP 프로젝트 ID, 리전, 서비스명 채우고 GitHub Secrets 에
 #       GCP_SA_KEY (서비스 계정 JSON) 등록 필요
 name: deploy
+# ⚠ GCP 설정(GitHub Secrets 에 GCP_SA_KEY) 전까지 자동배포 비활성화.
+#   지금은 수동 실행(Actions 탭 > Run workflow)만 가능 → main 푸시해도 배포 안 돌고 빨간 오류 안 뜸.
+#   배포 준비되면 아래를 다시 push 트리거로 바꾸면 됨:
+#     on:
+#       push:
+#         branches: [main]
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: ubuntu-latest

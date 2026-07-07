@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jeju POP Trail — 영상 근거 제주 여행 가이드</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<script src="config.local.js"></script><!-- 로컬 전용(gitignore): window.KAKAO_JS_KEY 주입. 없으면 SVG 폴백 -->
+<script src="cards.js"></script><!-- 카페 카드 데이터 (window.JEJU_CARDS) -->
+<script>
+  /* 카카오맵 JS 키: 비우면 SVG 스타일 지도로 폴백(개발 기본값). 실지도는 config.local.js 로 주입. */
+  window.KAKAO_JS_KEY = window.KAKAO_JS_KEY || "";
+</script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{ --accent:#0071e3; --ink:#1d1d1f; --sub:#6e6e73; --line:#e4e4e7; --panel:#f5f5f7; --pt:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace; }
+  body{ background:#e8e8ea; font-family:var(--pt); -webkit-font-smoothing:antialiased; color:var(--ink); }
+  a{ color:var(--accent); text-decoration:none } a:hover{ text-decoration:underline }
+  button{ font-family:inherit }
+  .page{ width:min(1280px,96vw); margin:40px auto; background:#fff; border-radius:22px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.22) }
+
+  .nav{ height:52px; display:flex; align-items:center; justify-content:space-between; padding:0 40px; background:rgba(251,251,253,.85); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(12px) }
+  .nav .brand{ font-size:19px; font-weight:600; letter-spacing:-.02em }
+  .nav .links{ display:flex; gap:32px; font-size:13px; font-weight:400 }
+  .nav .links a{ color:var(--ink) }
+  .nav .cta{ font-size:13px; color:#fff; background:var(--accent); border:none; border-radius:980px; padding:6px 15px; cursor:pointer }
+
+  .hero{ text-align:center; padding:80px 40px 20px; background:#fff }
+  .eyebrow{ font-size:19px; font-weight:600; color:#b5651d; letter-spacing:-.01em; margin-bottom:12px }
+  .hero h1{ font-size:clamp(40px,6vw,68px); font-weight:600; line-height:1.06; letter-spacing:-.025em; margin-bottom:20px }
+  .hero p.lead{ font-size:23px; font-weight:400; line-height:1.4; color:var(--sub); max-width:760px; margin:0 auto 40px }
+  .searchbar{ max-width:680px; margin:0 auto; display:flex; gap:10px; align-items:center; background:var(--panel); border:1px solid #e0e0e4; border-radius:980px; padding:8px 8px 8px 24px }
+  .searchbar input{ flex:1; border:none; background:none; outline:none; font-size:17px; color:var(--ink); font-family:inherit }
+  .searchbar input::placeholder{ color:#86868b }
+  .searchbar button{ border:none; border-radius:980px; padding:12px 24px; font-size:16px; font-weight:500; color:#fff; background:var(--accent); cursor:pointer; white-space:nowrap }
+  .chips{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px }
+  .chips button{ font-size:13px; color:var(--sub); background:var(--panel); border:none; border-radius:980px; padding:7px 15px; cursor:pointer }
+  .chips button:hover{ color:var(--ink) }
+
+  .section{ padding:96px 40px 104px }
+  .section.alt{ background:var(--panel) }
+  .section-head{ text-align:center; margin-bottom:12px }
+  .section-head h2{ font-size:clamp(30px,4vw,44px); font-weight:600; letter-spacing:-.02em }
+  .section-head p{ font-size:19px; color:var(--sub); margin-top:14px }
+
+  .map-stage{ position:relative; width:min(1000px,90%); height:500px; margin:28px auto 0 }
+  #jptKakaoMap{ position:absolute; inset:0; border-radius:20px; overflow:hidden; display:none }
+  .svgwrap{ position:absolute; inset:0 }
+  .pin{ position:absolute; transform:translate(-50%,-50%); z-index:5 }
+  .pin button{ display:flex; flex-direction:column; align-items:center; gap:6px; background:none; border:none; cursor:pointer }
+  .pin .mk{ position:relative; width:16px; height:16px }
+  .pin .dot{ position:absolute; inset:0; border-radius:50%; background:var(--accent); box-shadow:0 2px 6px rgba(0,0,0,.28) }
+  .pin .ring{ position:absolute; inset:-7px; border-radius:50%; border:2px solid var(--accent); opacity:0; transition:opacity .2s }
+  .pin.active .ring{ opacity:.45 }
+  .pin .label{ font-size:13px; font-weight:600; color:var(--ink); background:rgba(255,255,255,.9); border-radius:6px; padding:2px 8px; white-space:nowrap }
+  .map-foot{ text-align:center; font-size:14px; color:#86868b; margin-top:20px }
+
+  .popup{ position:absolute; width:340px; z-index:20; }
+  .popup .card{ background:#fff; border-radius:20px; box-shadow:0 24px 64px rgba(0,0,0,.30); border:1px solid #ececec; overflow:hidden; text-align:left }
+  .popup .phead{ padding:20px 22px 6px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px }
+  .popup .phead .rname{ font-size:22px; font-weight:600; letter-spacing:-.02em }
+  .popup .phead .rtag{ font-size:14px; color:var(--sub); margin-top:3px }
+  .popup .x{ flex:none; width:28px; height:28px; border-radius:50%; border:none; background:#f0f0f2; color:var(--sub); font-size:16px; line-height:1; cursor:pointer }
+  .popup .plist{ padding:12px 16px 8px; display:flex; flex-direction:column; gap:8px }
+  .popup .spot{ display:flex; gap:12px; align-items:center; background:var(--panel); border-radius:12px; padding:11px 13px }
+  .popup .spot .sname{ font-size:15px; font-weight:600; letter-spacing:-.01em }
+  .popup .spot .stag{ font-size:12px; color:#86868b; margin-top:2px }
+  .popup .spot .sev{ flex:none; font-size:12px; font-weight:600; color:var(--accent); white-space:nowrap }
+  .popup .pfoot{ padding:4px 16px 18px }
+  .popup .pfoot button{ width:100%; border:none; border-radius:12px; padding:12px; background:var(--accent); color:#fff; font-size:15px; font-weight:500; cursor:pointer }
+
+  .cards3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; max-width:1080px; margin:0 auto }
+  .cards2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:1000px; margin:0 auto }
+  .feat{ background:var(--panel); border-radius:20px; padding:34px 30px 36px }
+  .feat .no{ font-family:var(--mono); font-size:15px; font-weight:700; color:var(--accent); margin-bottom:18px }
+  .feat h3{ font-size:24px; font-weight:600; letter-spacing:-.02em; margin-bottom:10px }
+  .feat p{ font-size:16px; line-height:1.5; color:var(--sub) }
+
+  .demo{ max-width:920px; margin:0 auto; background:#fff; border-radius:24px; padding:36px 40px 40px; box-shadow:0 2px 10px rgba(0,0,0,.05) }
+  .bubble-user{ display:flex; justify-content:flex-end; margin-bottom:18px }
+  .bubble-user span{ background:var(--accent); color:#fff; font-size:16px; line-height:1.5; border-radius:20px 20px 4px 20px; padding:13px 18px; max-width:70% }
+  .bubble-ai{ background:var(--panel); border-radius:4px 20px 20px 20px; padding:18px 20px; margin-bottom:28px }
+  .bubble-ai .tag{ font-size:13px; font-weight:600; color:#b5651d; letter-spacing:.04em; margin-bottom:8px }
+  .bubble-ai .txt{ font-size:16px; line-height:1.6 }
+  .track{ display:flex; gap:18px; align-items:center; background:var(--panel); border-radius:16px; padding:14px 16px; margin-top:12px }
+  .track .time{ flex:none; width:52px; text-align:center; font-family:var(--mono); font-size:15px; font-weight:700; color:var(--accent) }
+  .track .thumb{ width:130px; height:84px; flex:none; border-radius:12px; background-size:cover; background-position:center }
+  .track .body{ flex:1; min-width:0 }
+  .track .body .tn{ font-size:19px; font-weight:600; letter-spacing:-.01em; margin-bottom:3px }
+  .track .body .td{ font-size:14px; color:var(--sub); line-height:1.45 }
+  .track .ev{ flex:none; text-align:right }
+  .track .ev .n{ font-size:13px; font-weight:600; color:var(--accent) }
+  .track .ev .k{ font-size:12px; color:#86868b; margin-top:2px }
+
+  .cta-final{ text-align:center; padding:104px 40px 108px; background:var(--panel) }
+  .cta-final h2{ font-size:clamp(34px,5vw,52px); font-weight:600; letter-spacing:-.02em; margin-bottom:14px }
+  .cta-final p{ font-size:22px; color:var(--sub); margin-bottom:36px }
+
+  .footer{ background:#fff; border-top:1px solid var(--line); padding:28px 40px; font-size:12px; line-height:1.6; color:var(--sub) }
+
+  @media (max-width:820px){
+    .nav .links{ display:none }
+    .cards3,.cards2{ grid-template-columns:1fr }
+    .track{ flex-wrap:wrap }
+    .track .thumb{ width:100%; height:150px }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- nav -->
+  <nav class="nav">
+    <div class="brand">Jeju POP Trail</div>
+    <div class="links">
+      <a href="#map">지역으로 둘러보기</a><a href="#how">코스 만들기</a><a href="#why">근거 데이터</a><a href="#footer">소개</a>
+    </div>
+    <button class="cta">시작하기</button>
+  </nav>
+
+  <!-- hero -->
+  <header class="hero">
+    <div class="eyebrow">AI 제주 여행 가이드</div>
+    <h1>요즘 제주는,<br>영상이 먼저 알아요.</h1>
+    <p class="lead">공식 관광 DB가 놓치는 신상 스팟까지 — 실제 유튜브 영상을 분석해 근거 있는 여행 코스를 만들어 드려요.</p>
+    <div class="searchbar">
+      <input id="heroInput" type="text" placeholder="예: 애월 노을 감성 카페" onkeydown="if(event.key==='Enter')runSearch(this.value)">
+      <button onclick="runSearch(document.getElementById('heroInput').value)">코스 만들기</button>
+    </div>
+    <div class="chips">
+      <button onclick="runSearch('애월 오션뷰 카페')">애월 오션뷰 카페</button>
+      <button onclick="runSearch('성산 사진 예쁜 카페')">성산 사진 예쁜 카페</button>
+      <button onclick="runSearch('제주시내 베이커리')">제주시내 베이커리</button>
+      <button onclick="runSearch('노을 지는 감성 카페')">노을 지는 감성 카페</button>
+    </div>
+  </header>
+
+  <!-- search result (검색 시 표시) -->
+  <section id="resultSection" class="section" style="display:none">
+    <div class="section-head" style="margin-bottom:24px">
+      <div class="eyebrow">오늘의 셋리스트</div>
+      <h2 id="resultTitle"></h2>
+      <p id="resultIntro"></p>
+    </div>
+    <div class="demo" id="resultTracks" style="max-width:920px"></div>
+  </section>
+
+  <!-- interactive map -->
+  <section id="map" class="section alt">
+    <div class="section-head">
+      <div class="eyebrow">지역으로 둘러보기</div>
+      <h2>지도에서 제주를 펼쳐보세요.</h2>
+      <p>지역을 누르면, 그곳의 스팟이 <b style="color:var(--ink)">근거 영상 수</b>와 함께 나타나요.</p>
+    </div>
+
+    <div class="map-stage">
+      <div id="jptKakaoMap"></div>
+      <div class="svgwrap" id="svgwrap">
+        <svg viewBox="0 0 1000 500" style="position:absolute;inset:0;width:100%;height:100%">
+          <defs>
+            <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#93a0b0" flood-opacity="0.28"></feDropShadow>
+            </filter>
+          </defs>
+          <path d="M70,262 C70,172 236,120 436,112 C566,107 648,92 768,114 C892,137 952,188 946,264 C940,340 848,384 716,396 C614,405 566,416 434,410 C252,402 70,352 70,262 Z" fill="#fff" stroke="#e0e3e8" stroke-width="1.5" filter="url(#soft)"></path>
+          <ellipse cx="505" cy="258" rx="120" ry="58" fill="#eef1f4"></ellipse>
+          <ellipse cx="505" cy="256" rx="66" ry="32" fill="#e4e8ee"></ellipse>
+          <text x="505" y="252" text-anchor="middle" font-family="var(--mono)" font-size="12" font-weight="700" fill="#9aa4b2" letter-spacing="1">HALLASAN</text>
+          <text x="505" y="270" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="#b3bcc8">1,947m</text>
+        </svg>
+        <div id="pins"></div>
+        <div id="popup"></div>
+      </div>
+    </div>
+    <div class="map-foot">핀을 누르면 지역 정보가 열려요 · 지금 <b style="color:var(--ink)">7개 권역</b>을 안내하고 있어요</div>
+  </section>
+
+  <!-- how it works -->
+  <section id="how" class="section">
+    <div class="section-head" style="margin-bottom:60px">
+      <div class="eyebrow">작동 원리</div>
+      <h2>질문하면, 근거를 찾아 코스가 됩니다.</h2>
+    </div>
+    <div class="cards3">
+      <div class="feat"><div class="no">01</div><h3>질문</h3><p>가고 싶은 여행을 평소 말투로 물어보세요. 지역·분위기·조건 무엇이든 좋아요.</p></div>
+      <div class="feat"><div class="no">02</div><h3>영상 검색·분석</h3><p>최신 유튜브·숏츠에서 관련 장면을 찾아 여러 영상에 걸쳐 교차 검증해요.</p></div>
+      <div class="feat"><div class="no">03</div><h3>근거 있는 코스</h3><p>언급 횟수와 이동 동선까지 계산해, 출처 영상이 붙은 맞춤 코스를 완성해요.</p></div>
+    </div>
+  </section>
+
+  <!-- generated course demo -->
+  <section class="section alt">
+    <div class="section-head" style="margin-bottom:44px">
+      <div class="eyebrow">생성 결과 예시</div>
+      <h2>이렇게 만들어져요.</h2>
+    </div>
+    <div class="demo">
+      <div class="bubble-user"><span>애월에서 노을 보기 좋은 감성 카페 위주로 반나절 코스 짜줘</span></div>
+      <div class="bubble-ai">
+        <div class="tag">AI 가이드</div>
+        <div class="txt">애월 해안도로 라인으로 노을 동선을 잡았어요. 01·02는 <b>일몰 90분 전 도착</b>이 포인트, 03은 최근 숏츠에서 <b>3편 연속 등장</b>한 신상 스팟이에요. 주말엔 02 웨이팅이 길어 <b>평일 기준</b> 코스입니다.</div>
+      </div>
+      <div id="demoTracks"></div>
+    </div>
+  </section>
+
+  <!-- why different -->
+  <section id="why" class="section">
+    <div class="section-head" style="margin-bottom:56px">
+      <div class="eyebrow">왜 다를까요</div>
+      <h2>블로그 광고가 아니라, 영상 근거로.</h2>
+    </div>
+    <div class="cards2">
+      <div class="feat"><h3>실제 영상 근거</h3><p>모든 추천에 출처 영상이 붙어요. 광고성 블로그가 아니라, 사람들이 직접 찍어 올린 장면에서 시작합니다.</p></div>
+      <div class="feat"><h3>숨은 로컬 스팟</h3><p>공식 관광 DB에 없는 곳까지. 로컬 채널과 숏츠에서 반복 등장하는 신상·비공식 스팟을 찾아냅니다.</p></div>
+      <div class="feat"><h3>요즘 트렌드 반영</h3><p>매일 새 숏츠를 분석해, 지금 뜨고 있는 곳을 놓치지 않아요. 몇 년 전 정보로 헤매지 않습니다.</p></div>
+      <div class="feat"><h3>동선까지 계산</h3><p>시간대와 이동 거리를 고려해 하루를 낭비 없이. 일몰 시각 같은 타이밍까지 코스에 반영합니다.</p></div>
+    </div>
+  </section>
+
+  <!-- final cta -->
+  <section class="cta-final">
+    <h2>제주, 어디부터 갈까요?</h2>
+    <p>한 줄만 물어보면, 근거 있는 코스가 나와요.</p>
+    <div class="searchbar" style="max-width:640px;background:#fff">
+      <input id="ctaInput" type="text" placeholder="가고 싶은 제주 여행을 적어보세요" onkeydown="if(event.key==='Enter')runSearch(this.value)">
+      <button onclick="runSearch(document.getElementById('ctaInput').value)">코스 만들기</button>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <div id="footer" class="footer">
+    Jeju POP Trail · 모든 코스는 실제 유튜브 영상을 근거로 생성됩니다. 각 스팟의 '근거 N편'을 누르면 출처 영상으로 이동해요. 영상 속 정보는 시점에 따라 달라질 수 있으니 방문 전 운영 여부를 확인하세요.
+  </div>
+
+</div>
+
+<script>
+// ── 지역 데이터 (지도용, 종합 여행 스팟) ──────────────────────────────────
+const REGIONS = [
+  { key:'jejusi',   name:'제주시내',  tag:'도착하자마자, 원도심 감성', left:50, top:26, coord:[33.5007,126.5312], spots:[
+    {name:'사라봉 일몰', tag:'노을 · 야경', ev:3},{name:'동문시장 야식', tag:'로컬맛집 · 야식', ev:5},{name:'아라리오 뮤지엄', tag:'실내 · 전시', ev:2} ] },
+  { key:'aewol',    name:'애월',      tag:'노을과 감성 카페 라인', left:32, top:33, coord:[33.4626,126.3080], spots:[
+    {name:'한담 해안산책로', tag:'노을 · 산책', ev:4},{name:'카페 노을리', tag:'오션뷰 · 카페', ev:3},{name:'곽지 해수욕장', tag:'해변 · 물놀이', ev:2} ] },
+  { key:'hallim',   name:'한림·협재',  tag:'에메랄드빛 서쪽 바다', left:16, top:46, coord:[33.3940,126.2396], spots:[
+    {name:'협재 해수욕장', tag:'해변 · 인생샷', ev:6},{name:'금오름', tag:'오름 · 포토존', ev:4},{name:'한림공원', tag:'가족 · 정원', ev:2} ] },
+  { key:'jocheon',  name:'조천·함덕',  tag:'동쪽 초입의 옥빛 해변', left:64, top:28, coord:[33.5435,126.6690], spots:[
+    {name:'함덕 서우봉', tag:'해변 · 트레킹', ev:5},{name:'카페 델문도', tag:'오션뷰 · 카페', ev:3},{name:'사려니숲길', tag:'숲 · 힐링', ev:3} ] },
+  { key:'seongsan', name:'성산·우도',  tag:'일출과 섬 속의 섬', left:84, top:41, coord:[33.4581,126.9425], spots:[
+    {name:'성산일출봉', tag:'일출 · 세계유산', ev:7},{name:'우도 서빈백사', tag:'섬 · 해변', ev:5},{name:'광치기 해변', tag:'포토존 · 이끼', ev:3} ] },
+  { key:'pyoseon',  name:'표선·남원',  tag:'한적한 남동부', left:68, top:63, coord:[33.3260,126.8390], spots:[
+    {name:'큰엉 해안경승지', tag:'해안절벽 · 포토존', ev:4},{name:'동백포레스트', tag:'계절 · 포토존', ev:3},{name:'표선 해수욕장', tag:'해변 · 가족', ev:2} ] },
+  { key:'seogwipo', name:'중문·서귀포', tag:'폭포와 리조트의 남부', left:46, top:71, coord:[33.2496,126.4110], spots:[
+    {name:'천지연폭포', tag:'폭포 · 산책', ev:4},{name:'중문 색달해변', tag:'해변 · 서핑', ev:3},{name:'이중섭거리', tag:'문화 · 골목', ev:2} ] },
+];
+
+// 코스 데모 트랙 (정적 예시, 썸네일은 그라데이션 플레이스홀더)
+const DEMO_TRACKS = [
+  { time:'16:30', name:'한담 해안산책로', desc:'노을 직전 물색이 절정. 곽지 방향으로 걷다 보면 인생샷 포인트가 이어져요.', ev:'근거 4편', kind:'노을 · 산책', g:'linear-gradient(135deg,#ffd08a,#ff7a59)' },
+  { time:'17:30', name:'카페 노을리 애월점', desc:'통창 좌석이 일몰 명당. 주말 웨이팅 길다는 후기 다수 — 평일 추천.', ev:'근거 3편', kind:'오션뷰 · 카페', g:'linear-gradient(135deg,#8ec5ff,#5b8def)' },
+  { time:'18:40', name:'수산봉 그네나무', desc:'공식 관광 DB엔 없는 로컬 스팟. 최근 숏츠에서 연속 등장 중인 곳이에요.', ev:'근거 3편', kind:'숨은스팟 · 포토존', g:'linear-gradient(135deg,#b7f5c1,#3ec46d)' },
+  { time:'19:30', name:'한림 칠리버거 노포', desc:'노을 코스 마무리 저녁. 로컬 채널에서 "관광지 물가 아님"으로 소개된 집.', ev:'근거 2편', kind:'로컬맛집 · 저녁', g:'linear-gradient(135deg,#e0c3ff,#9a6bff)' },
+];
+
+let selected = null;
+let kakaoOn = false;
+
+// ── SVG 폴백 지도: 핀 + 팝업 ──────────────────────────────────────────────
+function renderPins(){
+  const wrap = document.getElementById('pins');
+  wrap.innerHTML = '';
+  REGIONS.forEach(r => {
+    const pin = document.createElement('div');
+    pin.className = 'pin' + (r.key === selected ? ' active' : '');
+    pin.style.left = r.left + '%';
+    pin.style.top = r.top + '%';
+    pin.innerHTML = `<button aria-label="${r.name}">
+        <span class="mk"><span class="ring"></span><span class="dot"></span></span>
+        <span class="label">${r.name}</span>
+      </button>`;
+    pin.querySelector('button').addEventListener('click', () => selectRegion(r.key));
+    wrap.appendChild(pin);
+  });
+}
+function renderPopup(){
+  const host = document.getElementById('popup');
+  const r = REGIONS.find(x => x.key === selected);
+  if (!r){ host.innerHTML = ''; return; }
+  const w = 340;
+  const openLeft = r.left >= 55;
+  const openUp = r.top >= 55;
+  const left = openLeft ? `calc(${r.left}% - ${w + 20}px)` : `calc(${r.left}% + 20px)`;
+  const transform = openUp ? 'translateY(-90%)' : 'translateY(-14%)';
+  const spots = r.spots.map(s => `
+      <div class="spot">
+        <div style="flex:1;min-width:0"><div class="sname">${s.name}</div><div class="stag">${s.tag}</div></div>
+        <div class="sev">근거 ${s.ev}편</div>
+      </div>`).join('');
+  host.innerHTML = `
+    <div class="popup" style="left:${left};top:${r.top}%;transform:${transform}">
+      <div class="card">
+        <div class="phead">
+          <div><div class="rname">${r.name}</div><div class="rtag">${r.tag}</div></div>
+          <button class="x" aria-label="닫기">×</button>
+        </div>
+        <div class="plist">${spots}</div>
+        <div class="pfoot"><button>이 지역 코스 만들기</button></div>
+      </div>
+    </div>`;
+  host.querySelector('.x').addEventListener('click', () => selectRegion(null));
+}
+function selectRegion(key){
+  selected = (key === selected) ? null : key;
+  renderPins();
+  renderPopup();
+}
+function renderDemo(){
+  document.getElementById('demoTracks').innerHTML = DEMO_TRACKS.map(t => `
+    <div class="track">
+      <div class="time">${t.time}</div>
+      <div class="thumb" style="background:${t.g}"></div>
+      <div class="body"><div class="tn">${t.name}</div><div class="td">${t.desc}</div></div>
+      <div class="ev"><div class="n">${t.ev}</div><div class="k">${t.kind}</div></div>
+    </div>`).join('');
+}
+
+// ── 카카오맵 (키 있을 때만; 실패하면 SVG 폴백 유지) ────────────────────────
+function initKakao(){
+  const key = ((window.KAKAO_JS_KEY || '') + '').trim();
+  if (!key) return;
+  const el = document.getElementById('jptKakaoMap');
+  if (!el) return;
+  const boot = () => {
+    try { window.kakao.maps.load(() => { try { renderKakao(el); } catch(e){ console.warn('Kakao init 실패, SVG 폴백', e); } }); }
+    catch(e){ console.warn('Kakao load 실패, SVG 폴백', e); }
+  };
+  if (window.kakao && window.kakao.maps){ boot(); return; }
+  const s = document.createElement('script');
+  s.id = 'kakao-sdk';
+  s.onload = boot;
+  s.onerror = () => console.warn('Kakao SDK 로드 실패 — 앱 키/도메인 등록 확인');
+  s.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${key}&autoload=false`;
+  document.head.appendChild(s);
+}
+function renderKakao(el){
+  const kakao = window.kakao;
+  const map = new kakao.maps.Map(el, { center: new kakao.maps.LatLng(33.38,126.55), level:10 });
+  el.style.display = 'block';
+  document.getElementById('svgwrap').style.display = 'none';
+  kakaoOn = true;
+  setTimeout(() => map.relayout(), 60);
+  let overlay = null;
+  REGIONS.forEach(r => {
+    const pos = new kakao.maps.LatLng(r.coord[0], r.coord[1]);
+    const marker = new kakao.maps.Marker({ position:pos, map, title:r.name });
+    kakao.maps.event.addListener(marker, 'click', () => {
+      if (overlay) overlay.setMap(null);
+      overlay = new kakao.maps.CustomOverlay({ position:pos, content:buildOverlay(r), yAnchor:1.3, xAnchor:0.5, zIndex:10 });
+      overlay.setMap(map);
+    });
+  });
+}
+function buildOverlay(r){
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'width:300px;background:#fff;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.28);border:1px solid #ececec;overflow:hidden;font-family:var(--pt);color:#1d1d1f;text-align:left';
+  const spots = r.spots.map(s => `<div style="display:flex;gap:10px;align-items:center;background:#f5f5f7;border-radius:10px;padding:9px 11px;margin:0 14px 7px">
+      <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">${s.name}</div><div style="font-size:11px;color:#86868b;margin-top:2px">${s.tag}</div></div>
+      <div style="flex:none;font-size:12px;font-weight:600;color:#0071e3">근거 ${s.ev}편</div></div>`).join('');
+  wrap.innerHTML = `
+    <div style="padding:16px 18px 4px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+      <div><div style="font-size:19px;font-weight:600">${r.name}</div><div style="font-size:13px;color:#6e6e73;margin-top:3px">${r.tag}</div></div>
+    </div>
+    <div style="padding:10px 0 6px">${spots}</div>
+    <div style="padding:4px 14px 16px"><button style="width:100%;border:none;border-radius:11px;padding:11px;background:#0071e3;color:#fff;font-size:14px;font-weight:500;cursor:pointer">이 지역 코스 만들기</button></div>`;
+  return wrap;
+}
+
+// ── 검색 → 코스 (search.py / generate.py 를 JS 로 포팅 · mock 카페 카드) ──────
+const S_REGIONS = ['애월','성산','중문','제주시내','서귀포시내','구좌','한림','조천','세화','곽지','협재','김녕','함덕','월정'];
+const S_CATKW = { '포토스팟':['사진','포토','포토존','예쁜','인생샷'], '맛집':['맛집','밥','식당','점심','저녁'], '카페':['카페','커피','디저트','베이커리','빵','브런치'] };
+const S_SLOTS = ['10:30','12:30','14:30','16:30','18:00'];
+
+function esc(s){ return (s==null?'':(''+s)).replace(/[&<>"]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+function firstSentence(sum){ if(!sum) return ''; const p=sum.split(/(?<=[.!?。])\s|(?<=[다요])\./); const s=(p[0]||sum).trim(); return s.length>70 ? s.slice(0,70)+'…' : s; }
+function s_detectRegion(q){ for(const r of S_REGIONS) if(q.includes(r)) return r; return null; }
+function s_detectCat(q){ for(const c of ['포토스팟','맛집','카페']) if(S_CATKW[c].some(k=>q.includes(k))) return c; return null; }
+
+function searchCards(query, topK){
+  topK = topK || 5;
+  const cards = window.JEJU_CARDS || [];
+  const region = s_detectRegion(query), cat = s_detectCat(query);
+  let pool = cards.filter(c => (!region || c.region===region) && (!cat || c.category===cat));
+  if(!pool.length && region) pool = cards.filter(c => c.region===region);
+  if(!pool.length) pool = cards.slice();
+  const toks = query.split(/\s+/).filter(t => t.length>=2);
+  const ov = (c)=> toks.filter(t => (c.spot_name+' '+c.tags.join(' ')+' '+c.summary).includes(t)).length;
+  pool.sort((a,b)=> (ov(b)-ov(a)) || (b.mention_count-a.mention_count));
+  return pool.slice(0, topK);
+}
+function makeSetlist(query, cards){
+  const q = (query||'').trim();
+  return {
+    title: cards.length ? `제주 ${cards[0].region} 코스 · '${q}'` : `'${q}'`,
+    intro: cards.length ? `'${q}' 셋리스트가 도착했어요. 총 ${cards.length}트랙 🍊` : '조건에 맞는 스팟을 못 찾았어요. 다른 키워드로 검색해 보세요.',
+    tracks: cards.map((c,i)=>({ time:S_SLOTS[i]||'', card:c, why:firstSentence(c.summary) })),
+  };
+}
+function trackHTML(t){
+  const c = t.card;
+  const vid = (c.video_ids && c.video_ids[0]) || '';
+  const thumb = vid ? `background:url(https://img.youtube.com/vi/${vid}/mqdefault.jpg) center/cover` : 'background:linear-gradient(135deg,#8ec5ff,#5b8def)';
+  const link = vid ? `https://www.youtube.com/watch?v=${vid}` : '#';
+  const tags = (c.tags||[]).slice(0,3).map(x=>'#'+esc(x)).join(' ');
+  return `<div class="track">
+    <div class="time">${esc(t.time)}</div>
+    <a href="${link}" target="_blank" rel="noopener" title="근거 영상 보기" style="flex:none;display:block;position:relative">
+      <div class="thumb" style="${thumb}"></div>
+      <span style="position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px">▶ 영상</span>
+    </a>
+    <div class="body"><div class="tn">${esc(c.spot_name)}</div><div class="td">${esc(t.why)}</div><div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div></div>
+    <div class="ev"><div class="n">차트인 ${c.mention_count}회</div><div class="k">${esc(c.region)} · ${esc(c.category)}</div></div>
+  </div>`;
+}
+function runSearch(query){
+  query = (query||'').trim();
+  if(!query) return;
+  const cards = searchCards(query, 5);
+  const sl = makeSetlist(query, cards);
+  document.getElementById('resultTitle').textContent = sl.title;
+  document.getElementById('resultIntro').textContent = sl.intro;
+  document.getElementById('resultTracks').innerHTML = sl.tracks.map(trackHTML).join('');
+  const sec = document.getElementById('resultSection');
+  sec.style.display = 'block';
+  sec.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+// ── 부팅 ─────────────────────────────────────────────────────────────────
+renderPins();
+renderDemo();
+initKakao();
+</script>
+</body>
+</html>
