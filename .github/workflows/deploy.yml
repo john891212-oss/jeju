@@ -1,0 +1,22 @@
+# CD: main 푸시 → Docker 빌드 → Cloud Run 배포
+# TODO: GCP 프로젝트 ID, 리전, 서비스명 채우고 GitHub Secrets 에
+#       GCP_SA_KEY (서비스 계정 JSON) 등록 필요
+name: deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Build & Deploy
+        run: |
+          gcloud run deploy jeju-pop-trail \
+            --source . \
+            --region asia-northeast3 \
+            --allow-unauthenticated

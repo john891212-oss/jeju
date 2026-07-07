@@ -1,0 +1,5 @@
+google-api-python-client
+openai
+chromadb
+streamlit
+python-dotenv
