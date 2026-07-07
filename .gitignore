@@ -4,12 +4,10 @@ config.py
 # 로컬 프론트 프로토타입 (API 키 하드코딩됨 — 절대 커밋 금지)
 app/*.html
 
-# 데이터 (golden·mock 제외 — 수작업/뼈대 자산은 커밋)
-!data/raw/
-!data/processed/
+# 데이터 — raw/processed/golden/mock 전체 커밋 (팀원 EDA 공유용)
+# data 폴더 안 json 은 모두 추적, data 밖에서 우발적으로 생기는 json 만 무시
 *.json
-!data/golden/*.json
-!data/mock/*.json
+!data/**/*.json
 
 # 파이썬
 __pycache__/
