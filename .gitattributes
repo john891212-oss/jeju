@@ -1,0 +1,10 @@
+# 줄바꿈 통일 — 팀원 간 CRLF/LF diff 오염 방지 (7/8 실측: 파일 12개가 줄바꿈만으로 전부 modified로 잡힘)
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.csv text eol=lf
+*.bat text eol=crlf

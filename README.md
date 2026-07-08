@@ -3,43 +3,46 @@
 유튜브 영상/숏츠 기반 **제주 카페 RAG 서비스**.
 질문을 던지면 실제 영상을 근거로 장소를 추천해주는 서비스를 제공합니다. 
 
-> **현재 상태 (2026-07-07)**
-> - **프론트(`web/`)**: 카카오맵 연동 + 검색 + 셋리스트가 구현된 **정본 프론트**. 정적 HTML+JS라 정적 서버만 있으면 바로 뜹니다.
-> - **데이터**: 크롤링 원본(raw) + 모델 정제본(processed)이 **git에 포함** — `pull` 하면 바로 EDA 가능.
-> - **RAG 백엔드**: 아직 **미연결**. 현재 프론트의 검색은 `web/cards.js`(정적 카드)를 클라이언트 JS로 필터링하는 mock입니다. 실 벡터검색·LLM은 다음 단계.
-> - **`app/main.py` (streamlit)**: 초기 프로토타입 — **지금 정본 아님**(참고용).
+> **현재 상태 (2026-07-08)**
+> - **RAG 백엔드 연결됨(MVP)**: 질문 → 임베딩 검색(Chroma) → 카드 응답이 로컬에서 관통합니다. `run_local.bat` 하나로 실행.
+> - **데이터셋 주종**: **네이버(블로그 정제) = 검색 주력**, 유튜브 = 근거 영상 링크·차트인 신호 담당. 크롤링 원본(raw)+정제본(processed) git 포함.
+> - **프론트(`web/`)**: 카카오맵 + 검색 정본. API 서버가 꺼져 있으면 mock 카드로 자동 폴백.
+> - 상세 결정·진행 상황은 **HANDOFF.md** 참조 (팀원 필독).
 
 ## 구조
 
 ```
-web/        ⭐ 정본 프론트 (HTML+JS) — 카카오맵 · 검색 · 셋리스트
-  index.html       랜딩 + 지역 지도 + 검색 UI
-  cards.js         카페 카드 데이터 (window.JEJU_CARDS · 지금은 정적 mock)
+web/        ⭐ 정본 프론트 (HTML+JS) — 카카오맵 · 검색
+  index.html       랜딩 + 지역 지도 + 검색 UI (백엔드 fetch + mock 폴백)
+  cards.js         mock 카페 카드 (백엔드 없을 때 폴백용)
   config.local.js  카카오 JS 키 주입 (gitignore · 각자 로컬 생성)
-app/        초기 streamlit 프로토타입 (참고용, 정본 아님)
+app/
+  server.py   ⭐ FastAPI 검색 API (/search, /health) — 임베딩→Chroma→카드 JSON
 data/
-  raw/        유튜브 API 원본 json (git 포함)
-  processed/  모델 정제본 json + 검수용 csv (git 포함)
-  mock/       streamlit 프로토타입용 샘플 카드
-  golden/     평가용 골든 질문셋
-pipeline/   수집→정제→병합→임베딩 배치 — ⚠️ 아직 스텁, 실코드는 notebooks/
-eval/       검색 품질 측정 (Hit@5)
-notebooks/  데이터탐색.ipynb — 실제 수집/정제 코드가 여기 있음
+  raw/        크롤링 원본 (유튜브 json · 네이버 크롤링.jsonl — 불변)
+  processed/  정제본 (유튜브 정제.json · 네이버 정제.jsonl · review_master.csv)
+  rag/        팀원 병합 seed (cafe_id/TIER 검증 410곳)
+pipeline/   naver_crawl.py → naver_refine.py → embed.py (각 파일 머리에 입출력 계약)
+eval/       검색 품질 측정 (Hit@5) — 골든셋 대기
+notebooks/  데이터탐색.ipynb — 유튜브 수집/Pass 1 실코드
 ```
 
-## 빠른 시작 — 사이트 띄우기
+## 빠른 시작
 
-`web/`은 정적 HTML+JS라 정적 서버만 있으면 됩니다.
+**1) 의존성 + 키 준비** (최초 1회)
 
 ```powershell
-cd web
-python -m http.server 8503
+pip install -r requirements.txt
+copy .env.example .env   # 열어서 실제 키 입력 (OPENAI_KEY는 필수)
 ```
 
-브라우저에서 **http://localhost:8503** 접속.
+**2) 실행 — 더블클릭 한 번**
 
-- **카카오 키가 없어도 SVG 지도로 정상 동작**합니다(개발 기본값). 검색·셋리스트·지역 지도 다 됩니다.
-- 실제 카카오맵을 켜려면 아래 "카카오 실지도" 참고.
+`run_local.bat` 실행 → API 서버(8000) + 웹(8503) 창 2개가 뜨고 브라우저가 열립니다.
+
+- 검색 결과 인트로에 "(오프라인 데모)" 문구가 **없으면** 임베딩 검색이 작동 중인 것.
+- 임베딩 DB(`chroma_smoke/`)가 없으면 먼저 `python pipeline/embed.py` 로 적재 (OPENAI_KEY 필요, 몇 분).
+- **카카오 키가 없어도 SVG 지도로 정상 동작**합니다(개발 기본값). 실지도는 아래 "카카오 실지도" 참고.
 
 > 포트를 `8503`으로 쓰는 건 카카오 JS 키가 `localhost:8503` 도메인에 등록돼 있기 때문입니다. **SVG 폴백만 쓸 거면 아무 포트나 괜찮습니다.**
 
