@@ -42,7 +42,7 @@ for line in open(os.path.join(ROOT, ".env"), encoding="utf-8"):
 client = OpenAI(api_key=env["OPENAI_KEY"])
 GKEY = env.get("API_KEY")  # 유튜브=구글 클라우드 키. Places 사진도 이 키로 (서버에서만, 브라우저 노출 없음)
 
-cdb = chromadb.PersistentClient(path=os.path.join(ROOT, "chroma_smoke"))
+cdb = chromadb.PersistentClient(path=os.environ.get("CHROMA_DIR", os.path.join(ROOT, "chroma_smoke")))
 col = cdb.get_collection("smoke")
 
 # ---- 부가정보 인덱스 (시작 시 1회 로드) ----
@@ -127,6 +127,52 @@ def _load_aux():
 AUX = _load_aux()
 print(f"[server] 부가정보 {len(AUX)}카페 로드 완료")
 
+# ---- 이름 매치 레이어 (결정적 조회) ----
+# 배경: 고유명사 조회는 임베딩의 직업이 아님 — "해지개" 검색 시 top10 전멸 실측 (2026-07-08).
+#       임베딩 문서엔 카페명이 없고, 있어도 희귀 고유명사는 유사도가 안 잡힘.
+# 원칙: 질의에 서빙 코퍼스의 카페명이 포함되면 해당 카드를 무조건 1순위 고정 (코드가 강제).
+#       임베딩은 나머지 슬롯만 채움. 사전은 chroma(=판정 유지·폐업 제외 통과분)에서 구축.
+_NAME_STOP = {"카페", "커피", "제주", "제주도", "베이커리", "디저트", "브런치",
+              "애월", "곽지", "한림", "협재", "함덕", "월정리", "세화", "김녕", "성산",
+              "표선", "남원", "위미", "중문", "사계", "대정", "안덕", "우도", "구좌", "조천",
+              "제주시내", "서귀포시내", "서귀포", "제주시", "월정"}  # 일반어·지역명은 이름 아님
+
+def _build_name_index():
+    idx = {}  # 정규화 이름 → {name, region, sources}
+    meta = col.get(include=["metadatas"])["metadatas"]
+    for m in meta:
+        n = m.get("spot_name")
+        if not n:
+            continue
+        key = _norm(n)
+        if len(key) < 2 or key in _NAME_STOP:
+            continue
+        e = idx.setdefault(key, {"name": n, "region": m.get("region"), "sources": []})
+        if m.get("source") and m["source"] not in e["sources"]:
+            e["sources"].append(m["source"])
+    return idx
+
+def name_lookup(q, limit=2):
+    """질의 문자열에서 카페명 탐지. 긴 이름 우선, 최대 limit곳.
+    len>=3은 부분 포함 허용, len==2는 완전 일치만 (오탐 방지)."""
+    qn = _norm(q)
+    hits = []
+    for key, e in NAME_IDX.items():
+        if (len(key) >= 3 and key in qn) or key == qn:
+            hits.append((len(key), e))
+    hits.sort(key=lambda x: -x[0])
+    seen, out = set(), []
+    for _, e in hits:
+        if e["name"] not in seen:
+            seen.add(e["name"])
+            out.append(e)
+        if len(out) >= limit:
+            break
+    return out
+
+NAME_IDX = _build_name_index()
+print(f"[server] 이름 사전 {len(NAME_IDX)}건 구축 완료")
+
 REGIONS = ["애월", "곽지", "한림", "협재", "함덕", "월정리", "세화", "김녕", "성산",
            "표선", "남원", "위미", "중문", "사계", "대정", "안덕", "우도", "구좌", "조천",
            "제주시내", "서귀포시내"]
@@ -184,6 +230,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], all
 @app.get("/search")
 def search(q: str, k: int = 8):
     region = detect_region(q)
+    pinned = name_lookup(q)  # 이름 조회는 임베딩보다 먼저, 결정적으로
     q_emb = client.embeddings.create(model="text-embedding-3-large", input=[q]).data[0].embedding
 
     def run(where):
@@ -208,8 +255,19 @@ def search(q: str, k: int = 8):
         if meta["source"] not in s["sources"]:
             s["sources"].append(meta["source"])
 
+    # 이름 매치 고정: 질의에 카페명이 있으면 그 카드가 무조건 앞 (임베딩 점수 무관)
+    ordered = []
+    for e in pinned:
+        p = spots.pop(e["name"], None) or {"spot_name": e["name"], "region": e["region"],
+                                           "score": 1.0, "sources": e["sources"]}
+        p["name_match"] = True
+        ordered.append(p)
+    ordered += sorted(spots.values(), key=lambda s: -s["score"])
+    ordered = ordered[:k]
+
     cards = []
-    for n, s in sorted(spots.items(), key=lambda x: -x[1]["score"])[:k]:
+    for s in ordered:
+        n = s["spot_name"]
         a = AUX.get(n, {})
         cards.append({**s,
                       "score": round(s["score"], 3),

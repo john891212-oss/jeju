@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jeju POP Trail — 영상 근거 제주 여행 가이드</title>
+<title>Jeju Trip — 영상 근거 제주 여행 가이드</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <script src="config.local.js"></script><!-- 로컬 전용(gitignore): window.KAKAO_JS_KEY 주입. 없으면 SVG 폴백 -->
@@ -91,7 +91,6 @@
   .bubble-ai .tag{ font-size:13px; font-weight:600; color:#b5651d; letter-spacing:.04em; margin-bottom:8px }
   .bubble-ai .txt{ font-size:16px; line-height:1.6 }
   .track{ display:flex; gap:18px; align-items:center; background:var(--panel); border-radius:16px; padding:14px 16px; margin-top:12px }
-  .track .time{ flex:none; width:52px; text-align:center; font-family:var(--mono); font-size:15px; font-weight:700; color:var(--accent) }
   .track .thumb{ width:130px; height:84px; flex:none; border-radius:12px; overflow:hidden }
   /* 유튜브 썸네일 로딩 상태 (트랙 카드 + 카카오 팝업 공유) — background는 로드 이벤트가 없어 <img>로 전환 */
   .ytthumb{ position:relative; overflow:hidden; background:var(--panel) }
@@ -127,7 +126,7 @@
 
   <!-- nav -->
   <nav class="nav">
-    <div class="brand">Jeju POP Trail</div>
+    <div class="brand">Jeju Trip</div>
     <div class="links">
       <a href="#map">지역으로 둘러보기</a><a href="#footer">소개</a>
     </div>
@@ -154,7 +153,7 @@
   <!-- search result (검색 시 표시) -->
   <section id="resultSection" class="section" style="display:none">
     <div class="section-head" style="margin-bottom:24px">
-      <div class="eyebrow">오늘의 셋리스트</div>
+      <div class="eyebrow">오늘의 추천</div>
       <h2 id="resultTitle"></h2>
       <p id="resultIntro"></p>
     </div>
@@ -194,7 +193,7 @@
 
   <!-- footer -->
   <div id="footer" class="footer">
-    Jeju POP Trail · 모든 코스는 실제 유튜브 영상을 근거로 생성됩니다. 각 스팟의 '근거 N편'을 누르면 출처 영상으로 이동해요. 영상 속 정보는 시점에 따라 달라질 수 있으니 방문 전 운영 여부를 확인하세요.
+    Jeju Trip · 모든 코스는 실제 유튜브 영상을 근거로 생성됩니다. 각 스팟의 '근거 N편'을 누르면 출처 영상으로 이동해요. 영상 속 정보는 시점에 따라 달라질 수 있으니 방문 전 운영 여부를 확인하세요.
   </div>
 
 </div>
@@ -425,7 +424,6 @@ async function fetchPhotoUris(card){
 // ── 검색 → 코스 (search.py / generate.py 를 JS 로 포팅 · mock 카페 카드) ──────
 const S_REGIONS = ['애월','성산','중문','제주시내','서귀포시내','구좌','한림','조천','세화','곽지','협재','김녕','함덕','월정'];
 const S_CATKW = { '포토스팟':['사진','포토','포토존','예쁜','인생샷'], '맛집':['맛집','밥','식당','점심','저녁'], '카페':['카페','커피','디저트','베이커리','빵','브런치'] };
-const S_SLOTS = ['10:30','12:30','14:30','16:30','18:00'];
 
 function esc(s){ return (s==null?'':(''+s)).replace(/[&<>"]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
 function firstSentence(sum){ if(!sum) return ''; const p=sum.split(/(?<=[.!?。])\s|(?<=[다요])\./); const s=(p[0]||sum).trim(); return s.length>70 ? s.slice(0,70)+'…' : s; }
@@ -448,21 +446,20 @@ function makeSetlist(query, cards){
   const q = (query||'').trim();
   return {
     title: cards.length ? `제주 ${cards[0].region} 코스 · '${q}'` : `'${q}'`,
-    intro: cards.length ? `'${q}' 셋리스트가 도착했어요. 총 ${cards.length}트랙 🍊` : '조건에 맞는 스팟을 못 찾았어요. 다른 키워드로 검색해 보세요.',
-    tracks: cards.map((c,i)=>({ time:S_SLOTS[i]||'', card:c, why:firstSentence(c.summary) })),
+    intro: cards.length ? `'${q}' 코스가 나왔어요. 총 ${cards.length}곳 🍊` : '조건에 맞는 스팟을 못 찾았어요. 다른 키워드로 검색해 보세요.',
+    tracks: cards.map(c=>({ card:c, why:firstSentence(c.summary) })),
   };
 }
 function trackHTML(t){
   const c = t.card;
   const vid = pickVideo(c);
   const blogLink = (c.blog_links && c.blog_links[0]) || '';
-  // MV 트랙(영상 有) vs 음원 트랙(블로그 근거) — 가짜 썸네일 금지, 그라데이션 폴백
+  // 영상 있는 카페 = 유튜브 썸네일 / 블로그 근거만 = 그라데이션 (가짜 썸네일 금지)
   const link = vid ? `https://www.youtube.com/watch?v=${vid}` : (blogLink || '#');
   const badge = vid ? '▶ 영상' : (blogLink ? '📝 후기' : '');
-  const evidence = `차트인 ${c.mention_count}회` + (c.bloggers ? ` · 후기 ${c.bloggers}명` : '');
+  const evidence = `영상 ${c.mention_count}편` + (c.bloggers ? ` · 후기 ${c.bloggers}명` : '');
   const tags = (c.tags||[]).slice(0,3).map(x=>'#'+esc(x)).join(' ');
   return `<div class="track">
-    <div class="time">${esc(t.time)}</div>
     <a href="${link}" target="_blank" rel="noopener" title="근거 보기" style="flex:none;display:block;position:relative">
       ${ytThumbHTML(vid, 'thumb')}
       ${badge ? `<span style="position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px">${badge}</span>` : ''}
@@ -500,7 +497,7 @@ async function runSearch(query){
   const sec = document.getElementById('resultSection');
   sec.style.display = 'block';
   sec.scrollIntoView({ behavior:'smooth', block:'start' });
-  plotCards(cards);   // 검색 결과를 지도에도 반영 (카카오 실지도일 때만 동작 · 화면은 셋리스트로 스크롤)
+  plotCards(cards);   // 검색 결과를 지도에도 반영 (카카오 실지도일 때만 동작 · 화면은 결과로 스크롤)
 }
 
 // ── 부팅 ─────────────────────────────────────────────────────────────────
