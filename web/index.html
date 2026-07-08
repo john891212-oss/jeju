@@ -129,7 +129,7 @@
   <nav class="nav">
     <div class="brand">Jeju POP Trail</div>
     <div class="links">
-      <a href="#map">지역으로 둘러보기</a><a href="#how">코스 만들기</a><a href="#why">근거 데이터</a><a href="#footer">소개</a>
+      <a href="#map">지역으로 둘러보기</a><a href="#footer">소개</a>
     </div>
     <button class="cta">시작하기</button>
   </nav>
@@ -192,59 +192,6 @@
     <div id="cafePhotoStrip" class="photostrip" style="display:none"></div>
   </section>
 
-  <!-- how it works -->
-  <section id="how" class="section">
-    <div class="section-head" style="margin-bottom:60px">
-      <div class="eyebrow">작동 원리</div>
-      <h2>질문하면, 근거를 찾아 코스가 됩니다.</h2>
-    </div>
-    <div class="cards3">
-      <div class="feat"><div class="no">01</div><h3>질문</h3><p>가고 싶은 여행을 평소 말투로 물어보세요. 지역·분위기·조건 무엇이든 좋아요.</p></div>
-      <div class="feat"><div class="no">02</div><h3>영상 검색·분석</h3><p>최신 유튜브·숏츠에서 관련 장면을 찾아 여러 영상에 걸쳐 교차 검증해요.</p></div>
-      <div class="feat"><div class="no">03</div><h3>근거 있는 코스</h3><p>언급 횟수와 이동 동선까지 계산해, 출처 영상이 붙은 맞춤 코스를 완성해요.</p></div>
-    </div>
-  </section>
-
-  <!-- generated course demo -->
-  <section class="section alt">
-    <div class="section-head" style="margin-bottom:44px">
-      <div class="eyebrow">생성 결과 예시</div>
-      <h2>이렇게 만들어져요.</h2>
-    </div>
-    <div class="demo">
-      <div class="bubble-user"><span>애월에서 노을 보기 좋은 감성 카페 위주로 반나절 코스 짜줘</span></div>
-      <div class="bubble-ai">
-        <div class="tag">AI 가이드</div>
-        <div class="txt">애월 해안도로 라인으로 노을 동선을 잡았어요. 01·02는 <b>일몰 90분 전 도착</b>이 포인트, 03은 최근 숏츠에서 <b>3편 연속 등장</b>한 신상 스팟이에요. 주말엔 02 웨이팅이 길어 <b>평일 기준</b> 코스입니다.</div>
-      </div>
-      <div id="demoTracks"></div>
-    </div>
-  </section>
-
-  <!-- why different -->
-  <section id="why" class="section">
-    <div class="section-head" style="margin-bottom:56px">
-      <div class="eyebrow">왜 다를까요</div>
-      <h2>블로그 광고가 아니라, 영상 근거로.</h2>
-    </div>
-    <div class="cards2">
-      <div class="feat"><h3>실제 영상 근거</h3><p>모든 추천에 출처 영상이 붙어요. 광고성 블로그가 아니라, 사람들이 직접 찍어 올린 장면에서 시작합니다.</p></div>
-      <div class="feat"><h3>숨은 로컬 스팟</h3><p>공식 관광 DB에 없는 곳까지. 로컬 채널과 숏츠에서 반복 등장하는 신상·비공식 스팟을 찾아냅니다.</p></div>
-      <div class="feat"><h3>요즘 트렌드 반영</h3><p>매일 새 숏츠를 분석해, 지금 뜨고 있는 곳을 놓치지 않아요. 몇 년 전 정보로 헤매지 않습니다.</p></div>
-      <div class="feat"><h3>동선까지 계산</h3><p>시간대와 이동 거리를 고려해 하루를 낭비 없이. 일몰 시각 같은 타이밍까지 코스에 반영합니다.</p></div>
-    </div>
-  </section>
-
-  <!-- final cta -->
-  <section class="cta-final">
-    <h2>제주, 어디부터 갈까요?</h2>
-    <p>한 줄만 물어보면, 근거 있는 코스가 나와요.</p>
-    <div class="searchbar" style="max-width:640px;background:#fff">
-      <input id="ctaInput" type="text" placeholder="가고 싶은 제주 여행을 적어보세요" onkeydown="if(event.key==='Enter')runSearch(this.value)">
-      <button onclick="runSearch(document.getElementById('ctaInput').value)">코스 만들기</button>
-    </div>
-  </section>
-
   <!-- footer -->
   <div id="footer" class="footer">
     Jeju POP Trail · 모든 코스는 실제 유튜브 영상을 근거로 생성됩니다. 각 스팟의 '근거 N편'을 누르면 출처 영상으로 이동해요. 영상 속 정보는 시점에 따라 달라질 수 있으니 방문 전 운영 여부를 확인하세요.
@@ -269,14 +216,6 @@ const REGIONS = [
     {name:'큰엉 해안경승지', tag:'해안절벽 · 포토존', ev:4},{name:'동백포레스트', tag:'계절 · 포토존', ev:3},{name:'표선 해수욕장', tag:'해변 · 가족', ev:2} ] },
   { key:'seogwipo', name:'중문·서귀포', tag:'폭포와 리조트의 남부', left:46, top:71, coord:[33.2496,126.4110], spots:[
     {name:'천지연폭포', tag:'폭포 · 산책', ev:4},{name:'중문 색달해변', tag:'해변 · 서핑', ev:3},{name:'이중섭거리', tag:'문화 · 골목', ev:2} ] },
-];
-
-// 코스 데모 트랙 (정적 예시, 썸네일은 그라데이션 플레이스홀더)
-const DEMO_TRACKS = [
-  { time:'16:30', name:'한담 해안산책로', desc:'노을 직전 물색이 절정. 곽지 방향으로 걷다 보면 인생샷 포인트가 이어져요.', ev:'근거 4편', kind:'노을 · 산책', g:'linear-gradient(135deg,#ffd08a,#ff7a59)' },
-  { time:'17:30', name:'카페 노을리 애월점', desc:'통창 좌석이 일몰 명당. 주말 웨이팅 길다는 후기 다수 — 평일 추천.', ev:'근거 3편', kind:'오션뷰 · 카페', g:'linear-gradient(135deg,#8ec5ff,#5b8def)' },
-  { time:'18:40', name:'수산봉 그네나무', desc:'공식 관광 DB엔 없는 로컬 스팟. 최근 숏츠에서 연속 등장 중인 곳이에요.', ev:'근거 3편', kind:'숨은스팟 · 포토존', g:'linear-gradient(135deg,#b7f5c1,#3ec46d)' },
-  { time:'19:30', name:'한림 칠리버거 노포', desc:'노을 코스 마무리 저녁. 로컬 채널에서 "관광지 물가 아님"으로 소개된 집.', ev:'근거 2편', kind:'로컬맛집 · 저녁', g:'linear-gradient(135deg,#e0c3ff,#9a6bff)' },
 ];
 
 let selected = null;
@@ -332,15 +271,6 @@ function selectRegion(key){
   selected = (key === selected) ? null : key;
   renderPins();
   renderPopup();
-}
-function renderDemo(){
-  document.getElementById('demoTracks').innerHTML = DEMO_TRACKS.map(t => `
-    <div class="track">
-      <div class="time">${t.time}</div>
-      <div class="thumb" style="background:${t.g}"></div>
-      <div class="body"><div class="tn">${t.name}</div><div class="td">${t.desc}</div></div>
-      <div class="ev"><div class="n">${t.ev}</div><div class="k">${t.kind}</div></div>
-    </div>`).join('');
 }
 
 // ── 카카오맵 (키 있을 때만; 실패하면 SVG 폴백 유지) ────────────────────────
@@ -575,7 +505,6 @@ async function runSearch(query){
 
 // ── 부팅 ─────────────────────────────────────────────────────────────────
 renderPins();
-renderDemo();
 initKakao();
 </script>
 </body>
