@@ -372,10 +372,15 @@ function renderKakao(el){
     });
   });
 }
+// 카드의 근거 영상 여러 개 중 하나를 랜덤으로 고름 (호출할 때마다 새로 뽑아 중복 영상이 골고루 노출됨)
+function pickVideo(card){
+  const v = (card && card.video_ids) || [];
+  return v.length ? v[Math.floor(Math.random() * v.length)] : '';
+}
 function buildCafeOverlay(card, onClose){
   const wrap = document.createElement('div');
   wrap.style.cssText = 'width:280px;background:#fff;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.28);border:1px solid #ececec;overflow:hidden;font-family:var(--pt);color:#1d1d1f;text-align:left';
-  const vid = (card.video_ids && card.video_ids[0]) || '';
+  const vid = pickVideo(card);
   const thumb = vid
     ? `<a href="https://www.youtube.com/watch?v=${vid}" target="_blank" rel="noopener" style="display:block"><div style="height:120px;background:url(https://img.youtube.com/vi/${vid}/mqdefault.jpg) center/cover;position:relative"><span style="position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.72);color:#fff;font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px">▶ 근거 영상</span></div></a>`
     : '';
@@ -426,7 +431,7 @@ function makeSetlist(query, cards){
 }
 function trackHTML(t){
   const c = t.card;
-  const vid = (c.video_ids && c.video_ids[0]) || '';
+  const vid = pickVideo(c);
   const thumb = vid ? `background:url(https://img.youtube.com/vi/${vid}/mqdefault.jpg) center/cover` : 'background:linear-gradient(135deg,#8ec5ff,#5b8def)';
   const link = vid ? `https://www.youtube.com/watch?v=${vid}` : '#';
   const tags = (c.tags||[]).slice(0,3).map(x=>'#'+esc(x)).join(' ');
