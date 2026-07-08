@@ -70,6 +70,32 @@ python -m http.server 8503
 | `data/processed/카페-변환.json` | 모델 정제본 (스팟 카드 형태 — EDA에 적합) |
 | `data/processed/카페-csv.csv` | 검수용 표 (utf-8-sig, 엑셀용) |
 
+## 기본 RAG / Chroma
+
+기본 RAG DB는 `data/share/jeju_cafe_pipeline_share.json` 하나를 원천으로 만듭니다. 네이버 블로그나 명부 보강은 이후 성능 향상 레이어로 분리합니다.
+
+체크인된 seed 문서:
+
+| 파일 | 설명 |
+|---|---|
+| `data/rag/jeju_cafe_public.jsonl` | 사용자 추천용 RAG 문서 |
+| `data/rag/jeju_cafe_review.jsonl` | 내부 검수용 RAG 문서 |
+| `data/rag/manifest.json` | 문서 수와 출처 |
+
+Chroma 임베딩 생성:
+
+```powershell
+python pipeline/embed_seed_rag.py
+```
+
+생성 결과:
+
+```text
+chroma_db/
+```
+
+`chroma_db/`는 로컬 생성물이라 git에 올리지 않습니다. 팀원은 seed JSONL과 `.env`의 `OPENAI_KEY` 또는 `OPENAI_API_KEY`로 동일하게 재생성할 수 있습니다.
+
 ## 파이프라인 (실데이터 재생성 — 아직 미구현)
 
 `pipeline/`의 `collect` / `extract` / `merge` / `embed` 4개 스크립트는 **현재 docstring만 있는 빈 껍데기**입니다. 그대로 실행하면 아무것도 만들어지지 않습니다. 실제로 동작하는 수집·정제 코드는 `notebooks/데이터탐색.ipynb`에 있고, 스크립트로 이식하면 아래 순서로 돌 예정입니다:

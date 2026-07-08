@@ -1,0 +1,12 @@
+{
+    "source":  "data/share/jeju_cafe_pipeline_share.json",
+    "generated_from":  "jeju_cafe_pipeline_share.json only",
+    "public_docs":  410,
+    "review_docs":  58,
+    "serving_ready_cafes":  410,
+    "chroma_path":  "chroma_db",
+    "collections":  [
+                        "jeju_cafe_public",
+                        "jeju_cafe_review"
+                    ]
+}
