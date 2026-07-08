@@ -419,10 +419,37 @@ function buildCafeOverlay(card, onClose){
       <div style="font-size:11px;color:#86868b;margin:3px 0 6px">📍 ${card.region} · ${card.category} · <b style="color:#0071e3">영상 ${card.mention_count}편 근거</b></div>
       <div style="font-size:11px;color:#8fb8ff;margin-bottom:6px">${tags}</div>
       <div style="font-size:12px;line-height:1.5;color:#4a4a52">${sum.slice(0,92)}${sum.length>92?'…':''}</div>
+      ${(card.g_photos && card.g_photos.length) ? `<button data-photos style="margin-top:10px;width:100%;border:none;border-radius:9px;padding:9px;background:#f0f0f2;color:#1d1d1f;font-size:12px;font-weight:600;cursor:pointer">📷 카페 사진 ${card.g_photos.length}장 보기</button>` : ''}
     </div>`;
   const xb = wrap.querySelector('[data-x]');
   if (xb && onClose) xb.addEventListener('click', onClose);
+  const pb = wrap.querySelector('[data-photos]');
+  if (pb) pb.addEventListener('click', () => loadCafePhotos(card));
   return wrap;
+}
+
+// 지도에서 카페 선택 → 구글 Places 사진을 하단에 로드. 버튼 클릭 시에만 호출 = Photo 쿼터 절약.
+// 검색(searchText)은 미리 끝나 있고(cards.js의 g_photos에 사진 id 저장), 여기선 이미지만 로드(CORS 무관).
+function loadCafePhotos(card){
+  const strip = document.getElementById('cafePhotoStrip');
+  if (!strip) return;
+  const key = (window.GOOGLE_PLACES_KEY || '').trim();
+  const photos = card.g_photos || [];
+  strip.style.display = 'block';
+  if (!key) {
+    strip.innerHTML = '<div class="map-foot">사진 키 미설정 — config.local.js 에 GOOGLE_PLACES_KEY 를 추가하면 사진이 떠요</div>';
+    strip.scrollIntoView({ behavior:'smooth', block:'start' }); return;
+  }
+  if (!photos.length) {
+    strip.innerHTML = `<div class="map-foot">${esc(card.spot_name)} 사진이 아직 준비되지 않았어요</div>`;
+    strip.scrollIntoView({ behavior:'smooth', block:'start' }); return;
+  }
+  const imgs = photos.slice(0, 8).map(n =>
+    `<div><img loading="lazy" src="https://places.googleapis.com/v1/${n}/media?maxWidthPx=600&key=${encodeURIComponent(key)}" alt=""></div>`
+  ).join('');
+  strip.innerHTML = `<h4>📷 ${esc(card.spot_name)} — 카페 사진</h4><div class="grid">${imgs}</div>
+    <div class="map-foot" style="margin-top:8px">사진: Google (place photos)</div>`;
+  strip.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
 // ── 검색 → 코스 (search.py / generate.py 를 JS 로 포팅 · mock 카페 카드) ──────
