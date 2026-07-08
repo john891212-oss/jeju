@@ -30,7 +30,7 @@ registry = json.load(open(os.path.join(ROOT, "data", "processed", "cafe_registry
 regset = {norm(r["name"]) for r in registry if norm(r["name"])}
 
 # ---- 유튜브(Pass 1) 신호: 카페명별 집계 ----
-spots = json.load(open(os.path.join(ROOT, "data", "processed", "카페-변환.json"), encoding="utf-8"))
+spots = json.load(open(os.path.join(ROOT, "data", "processed", "유튜브 정제.json"), encoding="utf-8"))
 yt = {}
 yt_mentions = defaultdict(int)
 yt_maxview = defaultdict(int)
@@ -42,6 +42,18 @@ for s in spots:
     if n not in yt or RICH_ORDER.get(s.get("info_richness"), 9) < RICH_ORDER.get(yt[n].get("info_richness"), 9):
         yt[n] = s
 
+# ---- 재검색(구제) 결과: spot_name → 정리된 이름으로 재크롤한 레코드 ----
+rescue = {}
+rescue_path = os.path.join(ROOT, "data", "raw", "네이버 재검색 크롤링.jsonl")
+if os.path.exists(rescue_path):
+    for line in open(rescue_path, encoding="utf-8", errors="replace"):
+        try:
+            rr = json.loads(line)
+            if "blog" in rr:
+                rescue[rr["spot_name"]] = rr
+        except Exception:
+            pass
+
 # ---- 네이버 크롤 ----
 rows = []
 for line in open(os.path.join(ROOT, "data", "raw", "네이버 크롤링.jsonl"), encoding="utf-8"):
@@ -52,6 +64,11 @@ for line in open(os.path.join(ROOT, "data", "raw", "네이버 크롤링.jsonl"),
     name = r["spot_name"]
     base = yt.get(name, {})
     key = norm(name)
+    # 재검색 결과가 있으면 교체 (키도 정리된 이름 기준)
+    if name in rescue:
+        rr = rescue[name]
+        r = {**r, "blog": rr["blog"], "local": rr.get("local", {})}
+        key = norm(rr.get("cleaned_name") or name)
 
     items = r.get("blog", {}).get("items", [])
     valid = [it for it in items
@@ -103,7 +120,11 @@ for line in open(os.path.join(ROOT, "data", "raw", "네이버 크롤링.jsonl"),
         "스니펫예시": clean(valid[0].get("description", ""))[:100] if valid else "",
     })
 
-# 정렬: 제외후보→보류→유지 순으로 위에 (검수 대상부터), 그 안에서 블로거수 내림차순
+# 재검색 후에도 3신호 전부 죽은 행은 작업표에서 제외 (raw는 보존 — 합의: 2026-07-08)
+dropped = [r["카페명"] for r in rows if r["판정"] == "제외후보"]
+rows = [r for r in rows if r["판정"] != "제외후보"]
+
+# 정렬: 보류→유지 순으로 위에 (검수 대상부터), 그 안에서 블로거수 내림차순
 VERDICT_ORDER = {"제외후보": 0, "보류": 1, "유지": 2}
 rows.sort(key=lambda x: (VERDICT_ORDER.get(x["판정"], 9), -x["블로그_블로거수"]))
 
@@ -119,3 +140,5 @@ from collections import Counter
 print("판정 분포:", dict(Counter(r["판정"] for r in rows)))
 print("플래그 분포:", dict(Counter(f for r in rows for f in r["플래그"].split(";") if f)))
 print("registry 매칭:", sum(1 for r in rows if r["registry매칭"]), "곳")
+print(f"제외(작업표에서만): {len(dropped)}곳 — raw 보존")
+print("  제외 목록:", dropped[:20], "..." if len(dropped) > 20 else "")

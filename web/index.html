@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <script src="config.local.js"></script><!-- 로컬 전용(gitignore): window.KAKAO_JS_KEY 주입. 없으면 SVG 폴백 -->
-<script src="cards.js"></script><!-- 카페 카드 데이터 (window.JEJU_CARDS) -->
+<script src="cards.js?v=2"></script><!-- 카페 카드 데이터 (window.JEJU_CARDS) · 데이터 갱신 시 ?v= 올려 캐시 무효화 -->
 <script>
   /* 카카오맵 JS 키: 비우면 SVG 스타일 지도로 폴백(개발 기본값). 실지도는 config.local.js 로 주입. */
   window.KAKAO_JS_KEY = window.KAKAO_JS_KEY || "";
@@ -374,22 +374,19 @@ function plotCards(cards){
   const bounds = new kakao.maps.LatLngBounds();
   let placed = 0;
   (cards || []).forEach(card => {
-    jptPlaces.keywordSearch(card.region + ' ' + card.spot_name, (data, status) => {
-      if (status !== kakao.maps.services.Status.OK || !data.length) return;
-      // 제주 밖 동명 가게 오탐 방지: 제주 주소를 우선 채택 (없으면 첫 결과)
-      const hit = data.find(d => (d.road_address_name || d.address_name || '').startsWith('제주')) || data[0];
-      const pos = new kakao.maps.LatLng(hit.y, hit.x);
-      bounds.extend(pos);
-      const marker = new kakao.maps.Marker({ position:pos, map:jptMap, title:card.spot_name });
-      jptMarkers.push(marker);
-      kakao.maps.event.addListener(marker, 'click', () => {
-        if (jptOverlay) jptOverlay.setMap(null);
-        jptOverlay = new kakao.maps.CustomOverlay({ position:pos, content:buildCafeOverlay(card, () => { if(jptOverlay) jptOverlay.setMap(null); }), yAnchor:1.32, xAnchor:0.5, zIndex:10 });
-        jptOverlay.setMap(jptMap);
-      });
-      if (++placed >= 1) jptMap.setBounds(bounds);   // 찍힌 카페들이 다 보이게 범위 맞춤
+    if (!card.lat || !card.lng) return;   // 위치 미확인(카카오가 못 찾음)은 지도에 안 찍음
+    const pos = new kakao.maps.LatLng(card.lat, card.lng);
+    bounds.extend(pos);
+    const marker = new kakao.maps.Marker({ position:pos, map:jptMap, title:card.spot_name });
+    jptMarkers.push(marker);
+    kakao.maps.event.addListener(marker, 'click', () => {
+      if (jptOverlay) jptOverlay.setMap(null);
+      jptOverlay = new kakao.maps.CustomOverlay({ position:pos, content:buildCafeOverlay(card, () => { if(jptOverlay) jptOverlay.setMap(null); }), yAnchor:1.32, xAnchor:0.5, zIndex:10 });
+      jptOverlay.setMap(jptMap);
     });
+    placed++;
   });
+  if (placed) jptMap.setBounds(bounds);   // 찍힌 카페들이 다 보이게 범위 맞춤
 }
 // 카드의 근거 영상 여러 개 중 하나를 랜덤으로 고름 (호출할 때마다 새로 뽑아 중복 영상이 골고루 노출됨)
 function pickVideo(card){
@@ -451,24 +448,45 @@ function makeSetlist(query, cards){
 function trackHTML(t){
   const c = t.card;
   const vid = pickVideo(c);
+  const blogLink = (c.blog_links && c.blog_links[0]) || '';
+  // MV 트랙(영상 有) vs 음원 트랙(블로그 근거) — 가짜 썸네일 금지, 그라데이션 폴백
   const thumb = vid ? `background:url(https://img.youtube.com/vi/${vid}/mqdefault.jpg) center/cover` : 'background:linear-gradient(135deg,#8ec5ff,#5b8def)';
-  const link = vid ? `https://www.youtube.com/watch?v=${vid}` : '#';
+  const link = vid ? `https://www.youtube.com/watch?v=${vid}` : (blogLink || '#');
+  const badge = vid ? '▶ 영상' : (blogLink ? '📝 후기' : '');
+  const evidence = `차트인 ${c.mention_count}회` + (c.bloggers ? ` · 후기 ${c.bloggers}명` : '');
   const tags = (c.tags||[]).slice(0,3).map(x=>'#'+esc(x)).join(' ');
   return `<div class="track">
     <div class="time">${esc(t.time)}</div>
-    <a href="${link}" target="_blank" rel="noopener" title="근거 영상 보기" style="flex:none;display:block;position:relative">
+    <a href="${link}" target="_blank" rel="noopener" title="근거 보기" style="flex:none;display:block;position:relative">
       <div class="thumb" style="${thumb}"></div>
-      <span style="position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px">▶ 영상</span>
+      ${badge ? `<span style="position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px">${badge}</span>` : ''}
     </a>
     <div class="body"><div class="tn">${esc(c.spot_name)}</div><div class="td">${esc(t.why)}</div><div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div></div>
-    <div class="ev"><div class="n">차트인 ${c.mention_count}회</div><div class="k">${esc(c.region)} · ${esc(c.category)}</div></div>
+    <div class="ev"><div class="n">${evidence}</div><div class="k">${esc(c.region)} · ${esc(c.category)}</div></div>
   </div>`;
 }
-function runSearch(query){
+// ── 임베딩 검색 API (로컬 관통) — 백엔드 없으면 mock으로 자동 폴백 ──
+const API_BASE = 'http://localhost:8000';
+async function apiSearch(query, topK){
+  const r = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}&k=${topK}`,
+                        { signal: AbortSignal.timeout(8000) });
+  if(!r.ok) throw new Error('api '+r.status);
+  const d = await r.json();
+  return d.cards.map(c => ({
+    spot_name: c.spot_name, region: c.region || '', category: '카페',
+    tags: c.tags || [], summary: c.summary_blog || c.summary_youtube || '',
+    mention_count: c.mention_count || 0, video_ids: c.video_ids || [],
+    blog_links: c.blog_links || [], sources: c.sources || [], bloggers: c.bloggers || 0,
+  }));
+}
+async function runSearch(query){
   query = (query||'').trim();
   if(!query) return;
-  const cards = searchCards(query, 5);
+  let cards, live = true;
+  try { cards = await apiSearch(query, 5); }
+  catch(e){ live = false; cards = searchCards(query, 5); }   // 백엔드 꺼져 있으면 mock
   const sl = makeSetlist(query, cards);
+  if(!live) sl.intro += ' · (오프라인 데모 — 임베딩 서버 미접속)';
   document.getElementById('resultTitle').textContent = sl.title;
   document.getElementById('resultIntro').textContent = sl.intro;
   document.getElementById('resultTracks').innerHTML = sl.tracks.map(trackHTML).join('');
