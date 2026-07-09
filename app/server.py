@@ -266,6 +266,44 @@ def _load_spot_loc():
 SPOT_LOC = _load_spot_loc()
 print(f"[server] 지역 교정(주소 기반) {len(SPOT_LOC)}카페")
 
+# ---- place_id 맵 (중복 접기용) ----
+# 배경: kakao_place.py가 중복 122그룹 검출 — 서로 다른 spot_name이 같은 place_id
+#       ("코리코카페" = "코리코카페 제주점"). 검색 결과에 둘 다 나오면 슬롯 낭비(조건) +
+#       표 쪼개짐(브라우즈 블로거 수 갈라짐). 정체성은 place_id가 답(원칙 5·7/9 결정).
+# 원칙: 이름 유사도가 아니라 place_id 동일성으로만 접는다. place_id 없으면(MISS 171) 증거 없음 → 안 접음.
+def _load_spot_pid():
+    pid = {}
+    path = os.path.join(ROOT, "data", "processed", "카카오플레이스.jsonl")
+    if os.path.exists(path):
+        for line in open(path, encoding="utf-8"):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                r = json.loads(line)
+            except Exception:
+                continue
+            if r.get("place_id") and r.get("spot_name"):
+                pid[r["spot_name"]] = str(r["place_id"])
+    return pid
+
+SPOT_PID = _load_spot_pid()
+print(f"[server] place_id 맵 {len(SPOT_PID)}카페")
+
+def _dedup_place_id(entries, key):
+    """같은 place_id 항목을 하나로 접는다 — 대표는 key 최소(정렬 우선)값.
+    place_id 없는 항목은 증거 부재로 그대로 통과(spot_name이 이미 유일). 입력을 key로 정렬해 반환."""
+    entries = sorted(entries, key=key)
+    seen, out = set(), []
+    for e in entries:
+        pid = SPOT_PID.get(e["spot_name"])
+        if pid:
+            if pid in seen:
+                continue
+            seen.add(pid)
+        out.append(e)
+    return out
+
 def spot_bf(name, label=None):
     """카페의 (버킷, 세부) — 주소 유도값 우선, 없으면 구 라벨 폴백."""
     return SPOT_LOC.get(name) or _label_to_bf(label)
@@ -515,8 +553,12 @@ def search(q: str, k: int = 8, explain: int = 1):
             a = AUX.get(n, {})
             pool.append({"spot_name": n, "score": 0.0, "sources": e["sources"], "bf": (b, f),
                          "_key": (tier, -a.get("bloggers", 0), -a.get("mention_count", 0))})
+        # place_id 중복 접기: 같은 place_id는 _key 최선(블로거 최다) 대표만 — 표 쪼개짐 해소.
+        # total도 접은 뒤로 집계(고유 카페 수가 더 정직). max 채택: 같은 블로거 이중계산 위험 회피.
+        pool = _dedup_place_id(pool, key=lambda s: s["_key"])
         total = len(pool)
-        pool.sort(key=lambda s: s.pop("_key"))
+        for s in pool:
+            s.pop("_key", None)
         ordered = pool[:k]
     else:
         q_emb = client.embeddings.create(model="text-embedding-3-large", input=[q]).data[0].embedding
@@ -543,8 +585,14 @@ def search(q: str, k: int = 8, explain: int = 1):
             p["name_match"] = True
             ordered.append(p)
 
+        # place_id 중복 접기 (원칙 5: 정체성=place_id). PIN끼리(해지개+해지개카페)도,
+        # PIN과 후보 사이도 접는다. 대표는 점수 최고. PIN이 가진 place_id는 후보에서 제거.
+        ordered = _dedup_place_id(ordered, key=lambda s: -s["score"])
+        pinned_pids = {SPOT_PID.get(s["spot_name"]) for s in ordered}
+        pinned_pids.discard(None)
         # 지역 필터 (교정값 기준, 단계 완화: 세부 → 버킷 → 전체)
-        pool = list(spots.values())
+        pool = [s for s in spots.values() if SPOT_PID.get(s["spot_name"]) not in pinned_pids]
+        pool = _dedup_place_id(pool, key=lambda s: -s["score"])
         _sc = lambda s: -s["score"]
         if want_b:
             tier1 = [s for s in pool if want_f and s["bf"][1] == want_f]
@@ -567,6 +615,7 @@ def search(q: str, k: int = 8, explain: int = 1):
         b, f = s.pop("bf", (None, None))
         cards.append({**s,
                       "score": round(s["score"], 3),
+                      "place_id": SPOT_PID.get(n),  # 조인 키·중복 접기 근거 (없으면 null)
                       "region": f or b,            # 표시용 (세부 우선)
                       "region_bucket": b,          # 읍면급
                       "region_fine": f,            # 리·동급 (없으면 null)

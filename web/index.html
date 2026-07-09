@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jeju Trip — 영상 근거 제주 여행 가이드</title>
+<title>Caffe-IN Jeju — 영상 근거 제주 여행 가이드</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <script src="config.local.js"></script><!-- 로컬 전용(gitignore): window.KAKAO_JS_KEY 주입. 없으면 SVG 폴백 -->
@@ -26,20 +26,47 @@
   .nav .links a{ color:var(--ink) }
   .nav .cta{ font-size:13px; color:#fff; background:var(--accent); border:none; border-radius:980px; padding:6px 15px; cursor:pointer }
 
-  .hero{ text-align:center; padding:80px 40px 20px; background:#fff }
+  .hero{ position:relative; text-align:center; min-height:86vh; display:flex; flex-direction:column; justify-content:flex-end; padding:80px 40px 72px; overflow:hidden; isolation:isolate }
+  .hero-bg{ position:absolute; inset:0; z-index:-2; overflow:hidden; background:#000 }   /* 영상 로딩 전/실패 시 검은 화면 */
+  .hero-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-1 }
+  /* 유튜브 배경: iframe은 object-fit이 안 먹어 화면보다 크게 키우고 가운데를 크롭(16:9 유지). 클릭은 통과(pointer-events:none). */
+  .hero-yt{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100vw; height:56.25vw; min-width:177.78vh; min-height:100vh; pointer-events:none; border:0 }
+  .hero-scrim{ position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(6,20,38,.35) 0%,rgba(6,20,38,.10) 42%,rgba(6,20,38,.85) 90%,#061426 100%) }   /* 하단이 선택지 섹션 배경(#061426)으로 녹아듦 → 경계 없이 연결 */
+  .hero-inner{ position:relative; z-index:1 }
   .eyebrow{ font-size:19px; font-weight:600; color:#b5651d; letter-spacing:-.01em; margin-bottom:12px }
-  .hero h1{ font-size:clamp(40px,6vw,68px); font-weight:600; line-height:1.06; letter-spacing:-.025em; margin-bottom:20px }
+  .hero .eyebrow{ color:#ffcb8a; font-weight:700; text-shadow:0 1px 14px rgba(0,10,30,.35) }
+  .hero h1{ font-size:clamp(44px,6.4vw,74px); font-weight:700; line-height:1.05; letter-spacing:-.03em; margin-bottom:32px; color:#fff; text-shadow:0 2px 30px rgba(0,10,30,.38); text-wrap:balance }
+  .hero h1 .w{ display:inline-block; opacity:0; filter:blur(12px); transform:translateY(24px); animation:heroTypeIn .95s cubic-bezier(.2,.7,.2,1) both }
+  @keyframes heroTypeIn{ to{ opacity:1; filter:blur(0); transform:none } }
   .hero p.lead{ font-size:23px; font-weight:400; line-height:1.4; color:var(--sub); max-width:760px; margin:0 auto 40px }
-  .searchbar{ max-width:680px; margin:0 auto; display:flex; gap:10px; align-items:center; background:var(--panel); border:1px solid #e0e0e4; border-radius:980px; padding:8px 8px 8px 24px }
+  .searchbar{ max-width:680px; margin:0 auto; display:flex; gap:10px; align-items:center; background:rgba(255,255,255,.94); border:1px solid rgba(255,255,255,.6); border-radius:980px; padding:8px 8px 8px 24px; box-shadow:0 14px 44px rgba(0,20,50,.30); backdrop-filter:saturate(180%) blur(12px) }
   .searchbar input{ flex:1; border:none; background:none; outline:none; font-size:17px; color:var(--ink); font-family:inherit }
   .searchbar input::placeholder{ color:#86868b }
   .searchbar button{ border:none; border-radius:980px; padding:12px 24px; font-size:16px; font-weight:500; color:#fff; background:var(--accent); cursor:pointer; white-space:nowrap }
   .chips{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px }
-  .chips button{ font-size:13px; color:var(--sub); background:var(--panel); border:none; border-radius:980px; padding:7px 15px; cursor:pointer }
-  .chips button:hover{ color:var(--ink) }
+  .chips button{ font-size:13px; font-weight:500; color:#fff; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.30); border-radius:980px; padding:7px 15px; cursor:pointer; backdrop-filter:blur(8px) }
+  .chips button:hover{ background:rgba(255,255,255,.30) }
+
+  /* 히어로 선택지 이미지 슬라이드 */
+  .hero-slider{ position:relative; max-width:1000px; margin:0 auto }
+  .hs-track{ display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding:4px 4px 8px; scrollbar-width:none; -ms-overflow-style:none }
+  .hs-track::-webkit-scrollbar{ display:none }
+  .hs-card{ position:relative; flex:0 0 calc(33.333% - 11px); aspect-ratio:4/3; border-radius:20px; overflow:hidden; scroll-snap-align:start; box-shadow:0 16px 44px rgba(0,20,50,.30); background:var(--fb,linear-gradient(135deg,#0a3d62,#2e93d6)) }
+  /* 사진 슬롯: web/assets/hero/<이름>.jpg 를 넣으면 표시. 파일 없으면 위 --fb 폴백 그라데이션이 보임. */
+  .hs-img{ position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat }
+  .hs-cap{ position:absolute; left:0; right:0; bottom:0; z-index:2; padding:44px 16px 15px; text-align:left; background:linear-gradient(180deg,transparent,rgba(0,10,25,.78)); display:flex; flex-direction:column; gap:4px; pointer-events:none }
+  .hs-t{ color:#fff; font-size:16px; font-weight:600; letter-spacing:-.01em }
+  .hs-go{ align-self:flex-start; pointer-events:auto; border:none; background:rgba(255,255,255,.18); color:#eaf3ff; font-size:12px; font-weight:600; border-radius:980px; padding:5px 12px; cursor:pointer; backdrop-filter:blur(6px) }
+  .hs-go:hover{ background:rgba(255,255,255,.32); color:#fff }
+  .hs-arrow{ position:absolute; top:50%; transform:translateY(-50%); z-index:5; width:40px; height:40px; border-radius:50%; border:none; background:rgba(255,255,255,.94); color:#1d1d1f; font-size:22px; line-height:1; cursor:pointer; box-shadow:0 6px 20px rgba(0,20,50,.30) }
+  .hs-arrow:hover{ background:#fff }
+  .hs-prev{ left:-10px } .hs-next{ right:-10px }
 
   .section{ padding:96px 40px 104px }
   .section.alt{ background:var(--panel) }
+  /* 선택지 섹션: 히어로(영상) 하단 어둠과 이어지는 짙은 배경 → 경계 없이 연결. 헤드는 심플하게. */
+  .picks{ background:#061426; padding-top:56px }
+  .picks .section-head h2{ color:#fff; font-size:clamp(21px,2.4vw,28px); font-weight:600 }
   .section-head{ text-align:center; margin-bottom:12px }
   .section-head h2{ font-size:clamp(30px,4vw,44px); font-weight:600; letter-spacing:-.02em }
   .section-head p{ font-size:19px; color:var(--sub); margin-top:14px }
@@ -134,7 +161,7 @@
 
   <!-- nav -->
   <nav class="nav">
-    <div class="brand">Jeju Trip</div>
+    <div class="brand">Caffe-IN Jeju</div>
     <div class="links">
       <a href="#map">지역으로 둘러보기</a><a href="#footer">소개</a>
     </div>
@@ -143,22 +170,53 @@
 
   <!-- hero -->
   <header class="hero">
-    <div class="eyebrow">AI 제주 여행 가이드</div>
-    <h1>요즘 제주는,<br>영상이 먼저 알아요.</h1>
-    <p class="lead">공식 관광 DB가 놓치는 신상 스팟까지 — 실제 유튜브 영상을 분석해 근거 있는 여행 코스를 만들어 드려요.</p>
+    <div class="hero-bg">
+      <!-- 배경 영상: 유튜브 임베드(음소거·컨트롤 숨김·반복). 로딩 전/실패 시 아래 그라데이션이 폴백. -->
+      <iframe class="hero-yt" title="제주 항공 배경 영상"
+        src="https://www.youtube.com/embed/jQP5nDhxyZU?autoplay=1&mute=1&controls=0&loop=1&playlist=jQP5nDhxyZU&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&modestbranding=1"
+        frameborder="0" allow="autoplay; encrypted-media" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="hero-scrim"></div>
+    </div>
+    <div class="hero-inner">
+    <h1><span class="w" style="animation-delay:.05s">요즘</span> <span class="w" style="animation-delay:.15s">제주는,</span><br><span class="w" style="animation-delay:.28s">영상이</span> <span class="w" style="animation-delay:.38s">먼저</span> <span class="w" style="animation-delay:.48s">알아요.</span></h1>
     <div class="searchbar">
       <input id="heroInput" type="text" placeholder="예: 애월 노을 감성 카페" onkeydown="if(event.key==='Enter')runSearch(this.value)">
-      <button onclick="runSearch(document.getElementById('heroInput').value)">코스 만들기</button>
+      <button onclick="runSearch(document.getElementById('heroInput').value)">검색</button>
     </div>
-    <div class="chips">
-      <button onclick="runSearch('애월 오션뷰 카페')">애월 오션뷰 카페</button>
-      <button onclick="runSearch('성산 사진 예쁜 카페')">성산 사진 예쁜 카페</button>
-      <button onclick="runSearch('제주시내 베이커리')">제주시내 베이커리</button>
-      <button onclick="runSearch('노을 지는 감성 카페')">노을 지는 감성 카페</button>
     </div>
   </header>
 
-  <!-- search result (검색 시 표시) -->
+  <!-- 선택지: 히어로 밖 별개 섹션 (검색 유도 · 컨셉 5개) -->
+  <section class="section picks">
+    <div class="hero-slider">
+      <button class="hs-arrow hs-prev" aria-label="이전" onclick="heroSlide(-1)">‹</button>
+      <div class="hs-track" id="hsTrack">
+        <div class="hs-card" style="--fb:linear-gradient(135deg,#1b6ca8,#7ac7e8)">
+          <div class="hs-img" style="background-image:url('assets/hero/aewol.jpg')"></div>
+          <div class="hs-cap"><span class="hs-t">애월 오션뷰 카페</span><button class="hs-go" onclick="runSearch('애월 오션뷰 카페')">바로 보기 →</button></div>
+        </div>
+        <div class="hs-card" style="--fb:linear-gradient(135deg,#b5651d,#ff9e7a)">
+          <div class="hs-img" style="background-image:url('assets/hero/sunset.jpg')"></div>
+          <div class="hs-cap"><span class="hs-t">노을 지는 감성 카페</span><button class="hs-go" onclick="runSearch('노을 지는 감성 카페')">바로 보기 →</button></div>
+        </div>
+        <div class="hs-card" style="--fb:linear-gradient(135deg,#0a3d62,#2e93d6)">
+          <div class="hs-img" style="background-image:url('assets/hero/seongsan.jpg')"></div>
+          <div class="hs-cap"><span class="hs-t">성산 바다뷰 카페</span><button class="hs-go" onclick="runSearch('성산 바다뷰 카페')">바로 보기 →</button></div>
+        </div>
+        <div class="hs-card" style="--fb:linear-gradient(135deg,#2d5a3d,#7cb342)">
+          <div class="hs-img" style="background-image:url('assets/hero/forest.jpg')"></div>
+          <div class="hs-cap"><span class="hs-t">제주 숲속 감성 카페</span><button class="hs-go" onclick="runSearch('제주 숲속 카페')">바로 보기 →</button></div>
+        </div>
+        <div class="hs-card" style="--fb:linear-gradient(135deg,#8a5a2b,#e0b088)">
+          <div class="hs-img" style="background-image:url('assets/hero/bakery.jpg')"></div>
+          <div class="hs-cap"><span class="hs-t">제주시내 베이커리</span><button class="hs-go" onclick="runSearch('제주시내 베이커리')">바로 보기 →</button></div>
+        </div>
+      </div>
+      <button class="hs-arrow hs-next" aria-label="다음" onclick="heroSlide(1)">›</button>
+    </div>
+  </section>
+
+  <!-- search result (검색 시 표시 · 카드 선택 아래로 나옴) -->
   <section id="resultSection" class="section" style="display:none">
     <div class="section-head" style="margin-bottom:24px">
       <div class="eyebrow">오늘의 추천</div>
@@ -201,7 +259,7 @@
 
   <!-- footer -->
   <div id="footer" class="footer">
-    Jeju Trip · 모든 코스는 실제 유튜브 영상을 근거로 생성됩니다. 각 스팟의 '근거 N편'을 누르면 출처 영상으로 이동해요. 영상 속 정보는 시점에 따라 달라질 수 있으니 방문 전 운영 여부를 확인하세요.
+    Caffe-IN Jeju · 모든 코스는 실제 유튜브 영상을 근거로 생성됩니다. 각 스팟의 '근거 N편'을 누르면 출처 영상으로 이동해요. 영상 속 정보는 시점에 따라 달라질 수 있으니 방문 전 운영 여부를 확인하세요.
   </div>
 
 </div>
@@ -308,8 +366,10 @@ function renderKakao(el){
   setTimeout(() => jptMap.relayout(), 60);
   jptPlaces = new kakao.maps.services.Places();
 
-  // 검색 전 기본 표시: 준비된 카페 전체를 지도에 찍음
-  plotCards(window.JEJU_CARDS || []);
+  // 검색 전 기본 표시: 좌표 있는 카페 중 랜덤 10곳만 (전체를 찍으면 지도가 빽빽 → 새로고침마다 다른 '맛보기')
+  const pool = (window.JEJU_CARDS || []).filter(c => c.lat && c.lng);
+  for (let i = pool.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+  plotCards(pool.slice(0, 10));
 }
 
 // 지도의 마커·팝업을 모두 제거
@@ -558,8 +618,30 @@ async function runSearch(query){
 }
 
 // ── 부팅 ─────────────────────────────────────────────────────────────────
+// ── 히어로 선택지 슬라이드 ──────────────────────────────────────────────
+let hsTimer = null;
+function heroSlide(dir){
+  const t = document.getElementById('hsTrack'); if(!t) return;
+  const card = t.querySelector('.hs-card'); if(!card) return;
+  const step = card.offsetWidth + 16;
+  const max = t.scrollWidth - t.clientWidth;
+  let next = Math.round(t.scrollLeft / step) * step + dir * step;
+  if(next > max - 2) next = 0;              // 끝 → 처음 (루프)
+  if(next < 0) next = max;                  // 처음 이전 → 끝
+  t.scrollTo({ left: next, behavior:'smooth' });
+}
+function heroAutoplay(){
+  const t = document.getElementById('hsTrack'); if(!t) return;
+  const start = () => { clearInterval(hsTimer); hsTimer = setInterval(() => heroSlide(1), 3800); };
+  start();
+  t.addEventListener('mouseenter', () => clearInterval(hsTimer));
+  t.addEventListener('mouseleave', start);
+}
+
+// ── 부팅 ─────────────────────────────────────────────────────────────────
 renderPins();
 initKakao();
+heroAutoplay();
 </script>
 </body>
 </html>
