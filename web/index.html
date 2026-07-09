@@ -154,6 +154,37 @@
   .track .ev{ flex:none; text-align:right }
   .track .ev .n{ font-size:13px; font-weight:600; color:var(--accent) }
   .track .ev .k{ font-size:12px; color:#86868b; margin-top:2px }
+  /* 파도6: 방문자 별점 — 인기(영상 N편) 바로 아래에 놓아 '화제 ≠ 만족' 대비 (톤색으로 경고) */
+  .track .ev .revrate{ font-size:12px; font-weight:600; margin-top:3px; white-space:nowrap }
+  /* 파도4: 근거 보기 버튼 */
+  .ev-btn{ display:inline-flex; align-items:center; gap:4px; margin-top:8px; font-size:12px; font-weight:600; color:#0071e3; background:#eaf3ff; border:none; border-radius:8px; padding:5px 11px; cursor:pointer }
+  .ev-btn:hover{ background:#d8e9ff }
+  /* 파도5: '비슷한 카페' 구분선 — 확정 이름 매치와 추천을 화면에서 분리 */
+  .track-divider{ display:flex; align-items:center; gap:12px; margin:22px 2px 14px; color:#86868b; font-size:13px; font-weight:600 }
+  .track-divider::before, .track-divider::after{ content:''; flex:1; height:1px; background:var(--line) }
+
+  /* 파도4·6: 근거 모달 — 3렌즈(블로그=정보 / 카카오 리뷰=검증 / 쇼츠=반응) */
+  #evModal{ position:fixed; inset:0; z-index:1100; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.55); backdrop-filter:blur(4px); padding:20px }
+  .ev-box{ background:#fff; border-radius:22px; width:min(560px,96vw); max-height:88vh; overflow-y:auto; box-shadow:0 30px 80px rgba(0,0,0,.42); text-align:left }
+  .ev-head{ position:sticky; top:0; background:#fff; padding:24px 26px 16px; border-bottom:1px solid var(--line); z-index:2 }
+  .ev-head .evn{ font-size:22px; font-weight:700; letter-spacing:-.02em; padding-right:34px }
+  .ev-head .evh{ font-size:14px; color:var(--sub); margin-top:7px; line-height:1.5 }
+  .ev-x{ position:absolute; top:20px; right:22px; width:30px; height:30px; border:none; border-radius:50%; background:#f0f0f2; color:var(--sub); font-size:17px; line-height:1; cursor:pointer }
+  .ev-x:hover{ background:#e4e4e7 }
+  .ev-trust{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; empty-cells:hide }
+  .ev-chip{ font-size:12px; font-weight:600; border-radius:980px; padding:4px 12px }
+  .ev-body{ padding:8px 26px 28px }
+  .ev-lens{ margin-top:22px }
+  .ev-lens .lh{ display:flex; align-items:baseline; gap:8px; font-size:14px; font-weight:700; margin-bottom:11px }
+  .ev-lens .lh .lt{ font-size:11px; font-weight:600; color:#a1a1aa }
+  .ev-quote{ background:var(--panel); border-radius:12px; padding:11px 14px; font-size:13px; line-height:1.55; color:#33333a; margin-bottom:8px }
+  .ev-quote.op{ background:#eef4ff; color:#1d3a63 }
+  .ev-quote .star{ color:#f5a623; font-size:12px; margin-left:6px; white-space:nowrap; letter-spacing:1px }
+  .ev-react{ background:var(--panel); border-radius:12px; padding:11px 14px; margin-bottom:8px }
+  .ev-react .rt{ font-size:13px; font-weight:700; margin-bottom:3px }
+  .ev-react .rs{ font-size:13px; line-height:1.5; color:#4a4a52 }
+  .ev-empty{ font-size:13px; color:#a1a1aa; padding:4px 0 }
+  .ev-spin{ margin:44px auto; width:30px; height:30px; border:3px solid #ececf0; border-top-color:var(--accent); border-radius:50%; animation:ytspin .7s linear infinite }
 
   .cta-final{ text-align:center; padding:104px 40px 108px; background:var(--panel) }
   .cta-final h2{ font-size:clamp(34px,5vw,52px); font-weight:600; letter-spacing:-.02em; margin-bottom:14px }
@@ -277,6 +308,19 @@
 
 </div>
 
+<!-- 근거 보기 모달 (파도4·6): 카드 '근거 보기' → 블로그(정보)/카카오 리뷰(검증)/쇼츠(반응) 3렌즈. 배경/× 클릭·ESC 닫기 -->
+<div id="evModal" onclick="closeEvidence()">
+  <div class="ev-box" onclick="event.stopPropagation()">
+    <div class="ev-head">
+      <button class="ev-x" onclick="closeEvidence()" aria-label="닫기">×</button>
+      <div class="evn" id="evName"></div>
+      <div class="evh" id="evHead"></div>
+      <div class="ev-trust" id="evTrust"></div>
+    </div>
+    <div class="ev-body" id="evBody"></div>
+  </div>
+</div>
+
 <!-- 사진 라이트박스: 카페 사진 클릭 시 전체화면으로 크게 보기 (배경/× 클릭·ESC 닫기, ‹›·화살표키 순회) -->
 <div id="lightbox" onclick="closeLightbox()">
   <button class="lb-close" onclick="closeLightbox()" aria-label="닫기">×</button>
@@ -308,6 +352,8 @@ const REGIONS = [
 let selected = null;
 let kakaoOn = false;
 let lastQuery = '';   // 파도4 '근거 보기'에서 마지막 질의 재사용
+let lastCards = [];   // 마지막 검색 결과 카드 (근거 보기가 idx로 조회)
+let searchWasLive = false;   // 마지막 검색이 실서버 응답이었나 (오프라인 mock이면 '근거 보기' 숨김)
 // 카카오 실지도 상태 — 검색 결과를 지도에 다시 찍기 위해 모듈 스코프로 보관
 let jptMap = null, jptPlaces = null, jptMarkers = [], jptOverlay = null;
 let markerByIdx = {};   // 검색결과 카드 인덱스 → {pos, card} (카드 클릭 시 해당 마커로 점프하려고 색인)
@@ -542,6 +588,9 @@ function openLightbox(i){
 function lbNav(dir, ev){ if (ev) ev.stopPropagation(); openLightbox(lbIdx + dir); }   // 배경 클릭(닫기)과 분리
 function closeLightbox(){ document.getElementById('lightbox').style.display = 'none'; }
 document.addEventListener('keydown', e => {
+  // 근거 모달 ESC 닫기 (라이트박스보다 먼저 체크)
+  const em = document.getElementById('evModal');
+  if (em && em.style.display === 'flex'){ if (e.key === 'Escape') closeEvidence(); return; }
   const lb = document.getElementById('lightbox');
   if (!lb || lb.style.display !== 'flex') return;   // 라이트박스 열려 있을 때만 반응
   if (e.key === 'Escape') closeLightbox();
@@ -593,20 +642,28 @@ function trackHTML(t){
     ? `<div style="font-size:12px;color:#c2410c;margin-top:5px">⚠ ${c.caution.map(esc).join(' · ')}</div>` : '';
   const hours = c.hours_hint
     ? `<div style="font-size:12px;color:#86868b;margin-top:3px">🕒 ${esc(c.hours_hint)} <span style="color:#a1a1aa">· 참고용</span></div>` : '';
-  // 파도2 여론: 쇼츠 댓글 톤 뱃지(긍정😊/혼합😐/부정😞) + 한 줄 — 톤 없으면 안 그림, 부정·혼합도 그대로 노출(신뢰가 컨셉)
+  // 파도2 반응: 쇼츠 댓글 톤 뱃지(긍정😊/혼합😐/부정😞) + 한 줄 — 톤 없으면 안 그림, 부정·혼합도 그대로 노출(신뢰가 컨셉)
+  // ('쇼츠 반응'으로 명시 — 파도6의 카카오 '방문자 별점'과 다른 소스이므로 라벨로 구분)
   const RTONE = { '긍정':{e:'😊',c:'#16a34a'}, '혼합':{e:'😐',c:'#a16207'}, '부정':{e:'😞',c:'#dc2626'} };
   const rt = RTONE[c.reaction_tone];
   const reaction = rt
-    ? `<div style="font-size:12px;color:${rt.c};margin-top:5px">${rt.e} 여론 ${esc(c.reaction_tone)}${c.reaction_hint ? ` <span style="color:#86868b">· ${esc(c.reaction_hint)}</span>` : ''}</div>` : '';
+    ? `<div style="font-size:12px;color:${rt.c};margin-top:5px">${rt.e} 쇼츠 반응 ${esc(c.reaction_tone)}${c.reaction_hint ? ` <span style="color:#86868b">· ${esc(c.reaction_hint)}</span>` : ''}</div>` : '';
+  // 파도6: 카카오 방문자 별점 — 인기(영상 N편) 옆에 놓아 '화제 ≠ 만족' 가시화. null이면 안 그림
+  const RVTONE = { '긍정':'#16a34a', '혼합':'#a16207', '부정':'#dc2626' };
+  const reviewRate = (c.rating_avg != null)
+    ? `<div class="revrate" style="color:${RVTONE[c.review_tone] || '#86868b'}">⭐ ${c.rating_avg}${c.rating_count ? ` · ${c.rating_count}` : ''}</div>` : '';
+  // 파도4: '근거 보기' — 실서버 검색 결과에만 (오프라인 mock은 /evidence가 없음)
+  const evBtn = (searchWasLive && t.idx != null)
+    ? `<button class="ev-btn" onclick="openEvidence(${t.idx}, event)">🔍 근거 보기</button>` : '';
   const clk = (t.idx != null);                 // 검색결과 카드만 클릭 가능 (초기 표시 카드는 idx 없음)
   const hasLink = !!(vid || blogLink);         // 근거 링크(영상/후기) 유무
   return `<div class="track${clk ? ' clickable' : ''}"${clk ? ` onclick="focusCafeOnMap(${t.idx})" title="지도에서 위치 보기"` : ''}>
-    <a href="${link}" target="_blank" rel="noopener" title="근거 보기" onclick="${hasLink ? 'event.stopPropagation()' : 'event.preventDefault()'}" style="flex:none;display:block;position:relative">
+    <a href="${link}" target="_blank" rel="noopener" title="근거 영상/후기 열기" onclick="${hasLink ? 'event.stopPropagation()' : 'event.preventDefault()'}" style="flex:none;display:block;position:relative">
       ${ytThumbHTML(vid, 'thumb')}
       ${badge ? `<span style="position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px">${badge}</span>` : ''}
     </a>
-    <div class="body"><div class="tn">${esc(c.spot_name)}${nameMatch}</div><div class="td">${esc(t.why)}</div><div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div>${reaction}${caution}${hours}</div>
-    <div class="ev"><div class="n">${evidence}</div><div class="k">${esc(c.region)} · ${esc(c.category)}</div></div>
+    <div class="body"><div class="tn">${esc(c.spot_name)}${nameMatch}</div><div class="td">${esc(t.why)}</div><div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div>${reaction}${caution}${hours}${evBtn}</div>
+    <div class="ev"><div class="n">${evidence}</div>${reviewRate}<div class="k">${esc(c.region)} · ${esc(c.category)}</div></div>
   </div>`;
 }
 // ── 임베딩 검색 API (로컬 관통) — 백엔드 없으면 mock으로 자동 폴백 ──
@@ -630,12 +687,16 @@ async function apiSearch(query, topK){
     hours_hint: c.hours_hint || '',           // 파도2: 영업시간 힌트(블로그 발·참고용)
     reaction_tone: c.reaction_tone || '',     // 파도2: 쇼츠 댓글 여론 톤(긍정·혼합·부정) — 부정도 그대로 노출
     reaction_hint: c.reaction_hint || '',     // 파도2: 여론 한 줄
+    rating_avg: (c.rating_avg == null ? null : c.rating_avg),   // 파도6: 카카오 방문자 별점 평균 (없으면 null → 안 그림)
+    rating_count: (c.rating_count == null ? null : c.rating_count), // 파도6: 별점 개수
+    review_tone: c.review_tone || '',          // 파도6: 리뷰 여론 톤 — 쇼츠 반응과 별개 소스(화제≠만족)
     score: c.score,                            // 브라우즈는 0.0 (유사도 아님) — 표시 판단용
     lat: c.lat, lng: c.lng,                    // 네이버 지역검색 좌표 — plotCards가 직접 사용
   }));
-  // 카드 배열 + 최상위 메타를 함께 반환 — runSearch가 결과 헤더에 사용 (파도3: intro/browse/total)
+  // 카드 배열 + 최상위 메타를 함께 반환 — runSearch가 결과 헤더에 사용 (파도3: intro/browse/total, 파도5: filtered)
   return { cards, intro: d.intro || '', browse: d.browse === true,
-           total: (typeof d.total === 'number' ? d.total : null), region: d.region || '' };
+           total: (typeof d.total === 'number' ? d.total : null), region: d.region || '',
+           filtered: (typeof d.filtered === 'number' ? d.filtered : 0) };
 }
 // 검색 로딩 스켈레톤 (파도3 LLM 선별 층 붙으면 검색 2~6초 — 빈 화면 대신 자리표시)
 function skeletonHTML(n){
@@ -656,8 +717,10 @@ async function runSearch(query){
   let res, live = true;
   // k=10 (민옥 요청 7/9: 5개는 부족). 브라우즈("애월 카페"류)면 백엔드가 12+로 늘려 보냄 (파도3)
   try { res = await apiSearch(query, 10); }
-  catch(e){ live = false; res = { cards: searchCards(query, 10), intro:'', browse:false, total:null, region:'' }; }   // 백엔드 꺼져 있으면 mock
+  catch(e){ live = false; res = { cards: searchCards(query, 10), intro:'', browse:false, total:null, region:'', filtered:0 }; }   // 백엔드 꺼져 있으면 mock
   const cards = res.cards;
+  searchWasLive = live;   // '근거 보기' 버튼 노출 여부 (mock엔 /evidence 없음)
+  lastCards = cards;      // openEvidence(idx)가 조회
 
   // 결과 헤더: 브라우즈면 "지역 카페 N곳"(다수결 순), 아니면 코스 문구. intro는 백엔드 LLM 우선.
   let title, intro;
@@ -670,14 +733,92 @@ async function runSearch(query){
     title = sl.title;
     intro = res.intro || sl.intro;   // 백엔드 LLM intro 우선, 없으면(explain=0·mock) 자체 문구
   }
+  // 파도5: LLM이 무관 판단으로 제외한 수 — 있으면 캡션으로 정직하게 표기
+  if (res.filtered > 0) intro += ` · 관련도 낮은 결과 ${res.filtered}개 제외`;
   if(!live) intro += ' · (오프라인 데모 — 임베딩 서버 미접속)';
   document.getElementById('resultTitle').textContent = title;
   document.getElementById('resultIntro').textContent = intro;
   // 이유(why): 백엔드 reason 우선, 없으면 summary 첫 문장 폴백
+  // 파도5: 이름 확정 매치(name_match) 뒤 첫 추천 카드 앞에 '비슷한 카페' 구분선 (배열은 그대로 — 순서 재정렬·제거 아님)
+  const firstRec = cards.some(c => c.name_match) ? cards.findIndex(c => !c.name_match) : -1;
   document.getElementById('resultTracks').innerHTML =
-    cards.map((c, i) => trackHTML({ card:c, why:(c.reason || firstSentence(c.summary)), idx:i })).join('');
+    cards.map((c, i) => {
+      const tr = trackHTML({ card:c, why:(c.reason || firstSentence(c.summary)), idx:i });
+      return (i === firstRec && firstRec > 0) ? `<div class="track-divider">비슷한 카페</div>${tr}` : tr;
+    }).join('');
   plotCards(cards);   // 검색 결과를 지도에도 반영 (카카오 실지도일 때만 동작 · 화면은 결과로 스크롤)
 }
+
+// ── 근거 보기 (파도4·6): /evidence → 3렌즈(블로그=정보 / 카카오 리뷰=검증 / 쇼츠=반응) ──
+const EV_TONE = { '긍정':{e:'😊',c:'#16a34a'}, '혼합':{e:'😐',c:'#a16207'}, '부정':{e:'😞',c:'#dc2626'} };
+async function openEvidence(idx, ev){
+  if (ev) ev.stopPropagation();   // 카드 클릭(지도 점프)과 분리
+  const card = lastCards[idx];
+  if (!card) return;
+  document.getElementById('evName').textContent = card.spot_name;
+  document.getElementById('evHead').textContent = '실제 후기를 불러오는 중이에요…';
+  document.getElementById('evTrust').innerHTML = '';
+  document.getElementById('evBody').innerHTML = '<div class="ev-spin"></div>';
+  document.getElementById('evModal').style.display = 'flex';
+  try {
+    const u = new URL(API_BASE + '/evidence');
+    u.searchParams.set('name', card.spot_name);
+    if (lastQuery) u.searchParams.set('q', lastQuery);
+    const r = await fetch(u, { signal: AbortSignal.timeout(20000) });   // 첫 호출 인덱스 로드 +2초 → 여유
+    if (!r.ok) throw new Error('api ' + r.status);
+    renderEvidence(await r.json());
+  } catch(e){
+    document.getElementById('evHead').textContent = '';
+    document.getElementById('evBody').innerHTML =
+      `<div class="ev-empty">근거 서버에 연결하지 못했어요 — 백엔드(${API_BASE})가 켜져 있는지 확인해 주세요.</div>`;
+  }
+}
+function renderEvidence(d){
+  const q = d.query || '';
+  // 헤드라인: "블로거 N명이 '키워드'를 언급"
+  document.getElementById('evHead').innerHTML = d.bloggers_matched
+    ? `블로거 <b style="color:var(--ink)">${d.bloggers_matched}명</b>이 ${q ? `'${esc(q)}'을(를) ` : ''}언급했어요`
+    : (q ? `'${esc(q)}' 관련 블로그 언급은 찾지 못했어요` : '방문자 근거를 모았어요');
+  // 신뢰 요약 칩: 카카오 방문자 별점 (톤색)
+  const trust = [];
+  if (d.rating_avg != null){
+    const col = (EV_TONE[d.review_tone] || {}).c || '#6e6e73';
+    trust.push(`<span class="ev-chip" style="color:${col};background:${col}1a">⭐ 방문자 ${d.rating_avg}${d.rating_count ? ` · ${d.rating_count}개` : ''}</span>`);
+  }
+  document.getElementById('evTrust').innerHTML = trust.join('');
+
+  let html = '';
+  // 렌즈1 — 블로그(정보): LLM 의견 요약 + 원문 인용(코드 검증됨)
+  const bq = d.quotes || [];
+  html += `<div class="ev-lens"><div class="lh">📝 블로그 후기 <span class="lt">정보</span></div>`;
+  if (d.opinion) html += `<div class="ev-quote op">${esc(d.opinion)}</div>`;
+  if (bq.length) html += bq.map(t => `<div class="ev-quote">“${esc(t)}”</div>`).join('');
+  if (!d.opinion && !bq.length) html += `<div class="ev-empty">인용할 블로그 원문을 찾지 못했어요.</div>`;
+  html += `</div>`;
+  // 렌즈2 — 카카오 방문자 리뷰(검증): 별점 인용 (낮은 별점도 노출 — 신뢰가 컨셉)
+  const rq = d.review_quotes || [];
+  if (rq.length){
+    html += `<div class="ev-lens"><div class="lh">✅ 방문자 리뷰 <span class="lt">검증 · 카카오</span></div>`;
+    html += rq.map(r => {
+      const s = (r.star != null) ? Math.max(0, Math.min(5, Math.round(r.star))) : null;
+      const stars = (s != null) ? `<span class="star">${'★'.repeat(s)}${'☆'.repeat(5 - s)}</span>` : '';
+      return `<div class="ev-quote">“${esc(r.text)}”${stars}</div>`;
+    }).join('');
+    html += `</div>`;
+  }
+  // 렌즈3 — 쇼츠 댓글(반응): 톤 + 요약
+  const yr = d.youtube_reactions || [];
+  if (yr.length){
+    html += `<div class="ev-lens"><div class="lh">🎬 쇼츠 반응 <span class="lt">여론</span></div>`;
+    html += yr.map(r => {
+      const m = EV_TONE[r.tone] || { e:'💬', c:'#6e6e73' };
+      return `<div class="ev-react"><div class="rt" style="color:${m.c}">${m.e} ${esc(r.tone || '반응')}</div><div class="rs">${esc(r.summary || '')}</div></div>`;
+    }).join('');
+    html += `</div>`;
+  }
+  document.getElementById('evBody').innerHTML = html;
+}
+function closeEvidence(){ document.getElementById('evModal').style.display = 'none'; }
 
 // ── 부팅 ─────────────────────────────────────────────────────────────────
 // ── 히어로 선택지 슬라이드 ──────────────────────────────────────────────
