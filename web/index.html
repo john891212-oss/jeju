@@ -100,6 +100,14 @@
   .ytthumb .spin{ position:absolute; inset:0; margin:auto; width:22px; height:22px; border:3px solid rgba(0,0,0,.12); border-top-color:var(--accent); border-radius:50%; animation:ytspin .7s linear infinite }
   .ytthumb:not(.loading) .spin{ display:none }          /* 로드/실패하면 스피너 숨김 */
   @keyframes ytspin{ to{ transform:rotate(360deg) } }
+  /* 이름 일치 배지 (name_match — 유사도 아닌 확정 매치) */
+  .namematch{ display:inline-block; font-size:11px; font-weight:600; color:#0071e3; background:#eaf3ff; padding:1px 7px; border-radius:6px; margin-left:6px; vertical-align:middle; white-space:nowrap }
+  /* 검색 로딩 스켈레톤 (검색 2~6초 대비) */
+  .track.skel{ pointer-events:none }
+  .sk, .sk-line{ background:linear-gradient(90deg,#ececf0 25%,#f6f6f8 50%,#ececf0 75%); background-size:200% 100%; animation:skshimmer 1.25s ease-in-out infinite }
+  .track .thumb.sk{ border-radius:12px }
+  .sk-line{ height:13px; border-radius:6px; margin:7px 0 }
+  @keyframes skshimmer{ to{ background-position:-200% 0 } }
   .track .body{ flex:1; min-width:0 }
   .track .body .tn{ font-size:19px; font-weight:600; letter-spacing:-.01em; margin-bottom:3px }
   .track .body .td{ font-size:14px; color:var(--sub); line-height:1.45 }
@@ -219,6 +227,7 @@ const REGIONS = [
 
 let selected = null;
 let kakaoOn = false;
+let lastQuery = '';   // 파도4 '근거 보기'에서 마지막 질의 재사용
 // 카카오 실지도 상태 — 검색 결과를 지도에 다시 찍기 위해 모듈 스코프로 보관
 let jptMap = null, jptPlaces = null, jptMarkers = [], jptOverlay = null;
 
@@ -329,8 +338,7 @@ function plotCards(cards){
     });
     placed++;
   };
-  // cards.js(카카오 매칭)의 이름→좌표 인덱스: 검색 결과에 좌표가 없을 때 여기서 보충(카카오 매칭 좌표가 정확).
-  // 코워크의 apiSearch가 좌표를 안 실어줘도 여기서 채워 지도에 찍음. '제주 '+이름 실시간 검색은 매칭률이 낮아 제거.
+  // 검색 결과 카드는 백엔드 lat/lng(네이버 지역검색 발, 881곳)를 직접 사용. 좌표 없는 카드만 cards.js 이름→좌표로 보충(폴백).
   const seedByName = {};
   (window.JEJU_CARDS||[]).forEach(c => { if (c.lat && c.lng && !seedByName[c.spot_name]) seedByName[c.spot_name] = c; });
   (cards || []).forEach(card => {
@@ -372,7 +380,7 @@ function buildCafeOverlay(card, onClose){
   wrap.innerHTML = thumb + `
     <div style="padding:12px 14px 14px;position:relative">
       <button data-x style="position:absolute;top:10px;right:10px;width:24px;height:24px;border:none;border-radius:50%;background:#f0f0f2;color:#6e6e73;font-size:14px;line-height:1;cursor:pointer">×</button>
-      <div style="font-size:16px;font-weight:700;padding-right:26px">${card.spot_name}</div>
+      <div style="font-size:16px;font-weight:700;padding-right:26px">${card.spot_name}${card.name_match ? '<span class="namematch">📌 이름 일치</span>' : ''}</div>
       <div style="font-size:11px;color:#86868b;margin:3px 0 6px">📍 ${card.region} · ${card.category} · <b style="color:#0071e3">영상 ${card.mention_count}편 근거</b></div>
       <div style="font-size:11px;color:#8fb8ff;margin-bottom:6px">${tags}</div>
       <div style="font-size:12px;line-height:1.5;color:#4a4a52">${sum.slice(0,92)}${sum.length>92?'…':''}</div>
@@ -458,13 +466,19 @@ function trackHTML(t){
   const link = vid ? `https://www.youtube.com/watch?v=${vid}` : (blogLink || '#');
   const badge = vid ? '▶ 영상' : (blogLink ? '📝 후기' : '');
   const evidence = `영상 ${c.mention_count}편` + (c.bloggers ? ` · 후기 ${c.bloggers}명` : '');
+  const nameMatch = c.name_match ? '<span class="namematch">📌 이름 일치</span>' : '';   // 확정 매치 배지
   const tags = (c.tags||[]).slice(0,3).map(x=>'#'+esc(x)).join(' ');
+  // 파도2: 주의 신호(주차·웨이팅) / 영업시간 힌트 — 없으면 안 그림
+  const caution = (c.caution && c.caution.length)
+    ? `<div style="font-size:12px;color:#c2410c;margin-top:5px">⚠ ${c.caution.map(esc).join(' · ')}</div>` : '';
+  const hours = c.hours_hint
+    ? `<div style="font-size:12px;color:#86868b;margin-top:3px">🕒 ${esc(c.hours_hint)} <span style="color:#a1a1aa">· 참고용</span></div>` : '';
   return `<div class="track">
     <a href="${link}" target="_blank" rel="noopener" title="근거 보기" style="flex:none;display:block;position:relative">
       ${ytThumbHTML(vid, 'thumb')}
       ${badge ? `<span style="position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px">${badge}</span>` : ''}
     </a>
-    <div class="body"><div class="tn">${esc(c.spot_name)}</div><div class="td">${esc(t.why)}</div><div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div></div>
+    <div class="body"><div class="tn">${esc(c.spot_name)}${nameMatch}</div><div class="td">${esc(t.why)}</div><div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div>${caution}${hours}</div>
     <div class="ev"><div class="n">${evidence}</div><div class="k">${esc(c.region)} · ${esc(c.category)}</div></div>
   </div>`;
 }
@@ -472,31 +486,67 @@ function trackHTML(t){
 const API_BASE = 'http://localhost:8000';
 async function apiSearch(query, topK){
   const r = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}&k=${topK}`,
-                        { signal: AbortSignal.timeout(8000) });
+                        { signal: AbortSignal.timeout(20000) });   // 파도3 LLM 선별+이유 층: 조건검색 실측 ~6초, 브라우즈(12곳) 8~11초 → 스파이크 여유 20초
   if(!r.ok) throw new Error('api '+r.status);
   const d = await r.json();
-  return d.cards.map(c => ({
-    spot_name: c.spot_name, region: c.region || '', category: '카페',
+  // 백엔드가 이미 정렬(name_match 1순위)해서 보냄 — 프론트에서 재정렬·중복제거 금지 (계약 v2)
+  const cards = d.cards.map(c => ({
+    spot_name: c.spot_name,
+    region: c.region_fine || c.region || '', category: '카페',   // 세부 우선 (백엔드 주소기반 교정값)
+    region_bucket: c.region_bucket || '', region_fine: c.region_fine || '',
     tags: c.tags || [], summary: c.summary_blog || c.summary_youtube || '',
     mention_count: c.mention_count || 0, video_ids: c.video_ids || [],
     blog_links: c.blog_links || [], sources: c.sources || [], bloggers: c.bloggers || 0,
-    // 좌표는 카카오 장소검색이 권위 (plotCards에서 해석) — 서버 좌표는 쓰지 않음
+    name_match: c.name_match === true,        // 질의에 이 카페명 포함 → 확정 매치(1순위 고정)
+    reason: c.reason || '',                   // 파도3: LLM이 만든 '왜 이 카페' 한 줄 (없으면 빈 문자열 → summary 폴백)
+    caution: c.caution || [],                 // 파도2: 주의 신호(주차·웨이팅 등)
+    hours_hint: c.hours_hint || '',           // 파도2: 영업시간 힌트(블로그 발·참고용)
+    score: c.score,                            // 브라우즈는 0.0 (유사도 아님) — 표시 판단용
+    lat: c.lat, lng: c.lng,                    // 네이버 지역검색 좌표 — plotCards가 직접 사용
   }));
+  // 카드 배열 + 최상위 메타를 함께 반환 — runSearch가 결과 헤더에 사용 (파도3: intro/browse/total)
+  return { cards, intro: d.intro || '', browse: d.browse === true,
+           total: (typeof d.total === 'number' ? d.total : null), region: d.region || '' };
+}
+// 검색 로딩 스켈레톤 (파도3 LLM 선별 층 붙으면 검색 2~6초 — 빈 화면 대신 자리표시)
+function skeletonHTML(n){
+  return Array.from({length:n}, ()=>`<div class="track skel"><div class="thumb sk"></div>`
+    + `<div class="body"><div class="sk-line" style="width:45%"></div><div class="sk-line" style="width:85%"></div><div class="sk-line" style="width:30%"></div></div></div>`).join('');
 }
 async function runSearch(query){
   query = (query||'').trim();
   if(!query) return;
-  let cards, live = true;
-  try { cards = await apiSearch(query, 5); }
-  catch(e){ live = false; cards = searchCards(query, 5); }   // 백엔드 꺼져 있으면 mock
-  const sl = makeSetlist(query, cards);
-  if(!live) sl.intro += ' · (오프라인 데모 — 임베딩 서버 미접속)';
-  document.getElementById('resultTitle').textContent = sl.title;
-  document.getElementById('resultIntro').textContent = sl.intro;
-  document.getElementById('resultTracks').innerHTML = sl.tracks.map(trackHTML).join('');
   const sec = document.getElementById('resultSection');
+  // 검색이 2~6초 걸릴 수 있어 로딩 상태부터 표시 (빈 화면 방지)
+  document.getElementById('resultTitle').textContent = `'${query}' 검색 중…`;
+  document.getElementById('resultIntro').textContent = '영상 근거를 뒤지는 중이에요 🍊';
+  document.getElementById('resultTracks').innerHTML = skeletonHTML(10);
   sec.style.display = 'block';
   sec.scrollIntoView({ behavior:'smooth', block:'start' });
+  lastQuery = query;   // 파도4 '근거 보기'에서 재사용
+  let res, live = true;
+  // k=10 (민옥 요청 7/9: 5개는 부족). 브라우즈("애월 카페"류)면 백엔드가 12+로 늘려 보냄 (파도3)
+  try { res = await apiSearch(query, 10); }
+  catch(e){ live = false; res = { cards: searchCards(query, 10), intro:'', browse:false, total:null, region:'' }; }   // 백엔드 꺼져 있으면 mock
+  const cards = res.cards;
+
+  // 결과 헤더: 브라우즈면 "지역 카페 N곳"(다수결 순), 아니면 코스 문구. intro는 백엔드 LLM 우선.
+  let title, intro;
+  if (res.browse){
+    const label = res.region || (cards[0] && cards[0].region) || '제주';
+    title = res.total ? `${label} 카페 ${res.total}곳` : `${label} 카페 둘러보기`;
+    intro = res.intro || `인기순으로 둘러보고 있어요 · ${cards.length}곳 표시`;
+  } else {
+    const sl = makeSetlist(query, cards);
+    title = sl.title;
+    intro = res.intro || sl.intro;   // 백엔드 LLM intro 우선, 없으면(explain=0·mock) 자체 문구
+  }
+  if(!live) intro += ' · (오프라인 데모 — 임베딩 서버 미접속)';
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultIntro').textContent = intro;
+  // 이유(why): 백엔드 reason 우선, 없으면 summary 첫 문장 폴백
+  document.getElementById('resultTracks').innerHTML =
+    cards.map(c => trackHTML({ card:c, why:(c.reason || firstSentence(c.summary)) })).join('');
   plotCards(cards);   // 검색 결과를 지도에도 반영 (카카오 실지도일 때만 동작 · 화면은 결과로 스크롤)
 }
 
