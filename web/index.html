@@ -473,12 +473,17 @@ function trackHTML(t){
     ? `<div style="font-size:12px;color:#c2410c;margin-top:5px">⚠ ${c.caution.map(esc).join(' · ')}</div>` : '';
   const hours = c.hours_hint
     ? `<div style="font-size:12px;color:#86868b;margin-top:3px">🕒 ${esc(c.hours_hint)} <span style="color:#a1a1aa">· 참고용</span></div>` : '';
+  // 파도2 여론: 쇼츠 댓글 톤 뱃지(긍정😊/혼합😐/부정😞) + 한 줄 — 톤 없으면 안 그림, 부정·혼합도 그대로 노출(신뢰가 컨셉)
+  const RTONE = { '긍정':{e:'😊',c:'#16a34a'}, '혼합':{e:'😐',c:'#a16207'}, '부정':{e:'😞',c:'#dc2626'} };
+  const rt = RTONE[c.reaction_tone];
+  const reaction = rt
+    ? `<div style="font-size:12px;color:${rt.c};margin-top:5px">${rt.e} 여론 ${esc(c.reaction_tone)}${c.reaction_hint ? ` <span style="color:#86868b">· ${esc(c.reaction_hint)}</span>` : ''}</div>` : '';
   return `<div class="track">
     <a href="${link}" target="_blank" rel="noopener" title="근거 보기" style="flex:none;display:block;position:relative">
       ${ytThumbHTML(vid, 'thumb')}
       ${badge ? `<span style="position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px">${badge}</span>` : ''}
     </a>
-    <div class="body"><div class="tn">${esc(c.spot_name)}${nameMatch}</div><div class="td">${esc(t.why)}</div><div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div>${caution}${hours}</div>
+    <div class="body"><div class="tn">${esc(c.spot_name)}${nameMatch}</div><div class="td">${esc(t.why)}</div><div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div>${reaction}${caution}${hours}</div>
     <div class="ev"><div class="n">${evidence}</div><div class="k">${esc(c.region)} · ${esc(c.category)}</div></div>
   </div>`;
 }
@@ -501,6 +506,8 @@ async function apiSearch(query, topK){
     reason: c.reason || '',                   // 파도3: LLM이 만든 '왜 이 카페' 한 줄 (없으면 빈 문자열 → summary 폴백)
     caution: c.caution || [],                 // 파도2: 주의 신호(주차·웨이팅 등)
     hours_hint: c.hours_hint || '',           // 파도2: 영업시간 힌트(블로그 발·참고용)
+    reaction_tone: c.reaction_tone || '',     // 파도2: 쇼츠 댓글 여론 톤(긍정·혼합·부정) — 부정도 그대로 노출
+    reaction_hint: c.reaction_hint || '',     // 파도2: 여론 한 줄
     score: c.score,                            // 브라우즈는 0.0 (유사도 아님) — 표시 판단용
     lat: c.lat, lng: c.lng,                    // 네이버 지역검색 좌표 — plotCards가 직접 사용
   }));

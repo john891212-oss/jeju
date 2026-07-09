@@ -1,0 +1,2023 @@
+{
+ "글로시말차": {
+  "addr_hint": "제주 제주시 조천읍 조함해안로 112 GLOSSY MATCHA",
+  "hours_hint": "월-일요일 10시30분-18시30분",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "AQ5FslU5HhQ"
+  ]
+ },
+ "인카페 온더비치 (incafe on the beach)": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "댓글에서는 영상의 목적(진짜 매매 건인지 단순 보여주기인지)에 대한 의문이 제기되고 있음.",
+  "video_ids": [
+   "g6B66QOauZ0"
+  ]
+ },
+ "제주당": {
+  "addr_hint": "제주시 애월읍 월각로 927",
+  "hours_hint": "매일 10:00 - 21:00 / 20:30 라스트오더",
+  "phone_hint": "07-1474-1487",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들은 자리 확보가 매우 어렵고(대기·자리싸움), 빵은 평이 엇갈리나 음료는 가격 대비 만족도가 낮다는 불만이 주를 이룸.",
+  "video_ids": [
+   "eAxsekCZlMI",
+   "bzkTyrsJmWk",
+   "ZeGL9589QkA",
+   "sigmcMVgDJ0",
+   "BiGgae-w0_8",
+   "sW0oHLARx08",
+   "KJDxipKHsBQ",
+   "wiagQAiezoc"
+  ]
+ },
+ "멜버즈": {
+  "addr_hint": "제주 제주시 구남동2길 19-3",
+  "hours_hint": "10:00 - 20:00 (정기휴무 수); 15:00 - 17:00 break time",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들에서 음식(특히 빵, 잠봉)과 분위기가 맛있고 좋아 보인다는 긍정적 반응이 주를 이룸.",
+  "video_ids": [
+   "SrgxsYf6ytA",
+   "-lV0Dd-qfx8"
+  ]
+ },
+ "비수기애호가": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글은 카페의 뷰와 방문지로서의 추천성보다 영상 속 아기 손에 대한 관심과 위치 문의가 주를 이룸.",
+  "video_ids": [
+   "TW4sc9U3YLQ"
+  ]
+ },
+ "노을리 카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 방문 의사를 밝히는 긍정적 반응을 보이고 있다.",
+  "video_ids": [
+   "KuNXJMcDjYo"
+  ]
+ },
+ "제일성심당": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "현지인·방문자들이 빵 맛과 가성비, 친절한 사장님과 넉넉한 서비스(시식·덤·커피·물 제공)를 높이 평가하며 맞은편 보룡제과와 비교 추천하는 반응이 많음.",
+  "video_ids": [
+   "UdnSNpS47_E",
+   "SOxTSr3Zb8A"
+  ]
+ },
+ "떼르떼": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 떼르떼의 요거트빙수 양이 많고 아이스크림 맛이 좋다는 긍정적 평가와 배달·높은 평점, 노형동 인기 등을 언급하고 있으며 일부는 다른 빙수집(빠빠라기, 엘리스 등)과 비교함.",
+  "video_ids": [
+   "_pFIC1zVNos"
+  ]
+ },
+ "카이막": {
+  "addr_hint": "제주 제주시 애월읍 애월해안로 566 1층",
+  "hours_hint": "📍 매일 09:00 ~ 20:00",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "대부분 댓글은 카이막의 정통성(물소젖 여부, 첨가물 사용 여부)에 대해 의문을 제기하며, 맛에 대해서는 호불호가 갈리지만 대체로 '기대보다 평범'이라는 평과 가격이 비싸다는 불만이 섞여 있다.",
+  "video_ids": [
+   "eIj-oomDNLg"
+  ]
+ },
+ "커피파인더": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "RyTrGm3IEbE"
+  ]
+ },
+ "비밀역": {
+  "addr_hint": "제주 서귀포시 안덕면 화순중앙로 124번길 26-1",
+  "hours_hint": "10:30 ~18:00",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "대체로 인테리어·테마에 대한 긍정적 반응이 많지만 일부는 맛이 별로였다는 평이 있다.",
+  "video_ids": [
+   "rC-aCH3wETA",
+   "hJhpzxmE_s4"
+  ]
+ },
+ "해지개": {
+  "addr_hint": "제주 제주시 애월읍 애월북서길 52 . 1~2층",
+  "hours_hint": "매일09:00-21:00",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글 대부분이 과장된 홍보와 광고성 콘텐츠에 대한 불신·비판을 표하며 일부는 뷰와 빵 때문에 방문 의향을 밝힘.",
+  "video_ids": [
+   "wu5xHmR6iug",
+   "VSw24wzP-yM",
+   "sDjouK5crhs",
+   "aovcFNkr-IE",
+   "qG_PJygD-xk",
+   "ks0_-aU9JIE",
+   "sUiDSoQCzhc"
+  ]
+ },
+ "비밀역 카페": {
+  "addr_hint": "제주 서귀포시 안덕면 화순중앙로124번길 26-1 비밀역",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들은 카페의 일본 컨셉에 대한 호불호와 방문 의사, 위치(안덕면)가 숙소와 가까워 보인다는 실용적 언급을 주로 담고 있다.",
+  "video_ids": [
+   "021-uk1p_Bc"
+  ]
+ },
+ "베릴(베릴카페)": {
+  "addr_hint": "제주 제주시 한림읍 협재1길 19-8 1층",
+  "hours_hint": "매일 11:00-1",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들은 오션뷰와 인테리어를 칭찬하며 매우 인기 있어 주말·평일 오전에도 만석이라는 경험담을 공유했습니다.",
+  "video_ids": [
+   "_TFGjsCSlkM"
+  ]
+ },
+ "야원": {
+  "addr_hint": "제주시 조천읍 번영로 1218",
+  "hours_hint": "11:00~18:00 목요일휴무",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들은 카페의 분위기와 풍경을 매우 긍정적으로 평가하며 방문 추천과 감상(비·눈 올 때 운치 있음, 온돌 등)을 공유하는 반응이 주류이고 일부는 혼잡·정원관리 문제를 지적함.",
+  "video_ids": [
+   "FoZd5NtRp4g"
+  ]
+ },
+ "서귀피안베이커리": {
+  "addr_hint": "제주 서귀포시 성산읍 신양로122번길 17 2F",
+  "hours_hint": "08:00~20:00",
+  "phone_hint": "07-1338-8378",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들에서는 영상에 빵집 이름과 위치 안내가 없어 불편하다는 지적과, 서귀피안베이커리의 뛰어난 오션뷰·넓은 테이블 간격·맛있는 빵과 음료에 대한 긍정적 평가가 공존함.",
+  "video_ids": [
+   "wEOcwEfpmP4",
+   "10xHmsbbW_k"
+  ]
+ },
+ "성창힐": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "부정",
+  "reaction_hint": "댓글 대다수가 지역주민의 '텃세'(지역 갈등)로 폐업·영업중단했다는 해석과 비판을 표현하며, 일부는 운영 문제(청결·관리)나 연예인 사업 부적합성을 지적함.",
+  "video_ids": [
+   "zqVy29Ca5d8"
+  ]
+ },
+ "애월더선셋": {
+  "addr_hint": "제주 제주시 애월읍 일주서로 6111",
+  "hours_hint": "매일 1",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들은 두쫀쿠와 신메뉴(두바이초코와플)의 인기와 맛 조합(카다이프+크림+딸기, 초코라떼와의 궁합)을 긍정적으로 평가함.",
+  "video_ids": [
+   "i8ossX7fLhM",
+   "f_hpSSYWRK8"
+  ]
+ },
+ "아벨롭": {
+  "addr_hint": "제주 제주시 애월읍 애월로1길 24-15",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "방문자는 유럽 분위기와 베이커리(특히 크로와상·크로플)를 높이 평가하며 사진 찍기 좋고 추천한다고 함.",
+  "video_ids": [
+   "EHJd4_0AzcE"
+  ]
+ },
+ "애월 카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 뷰와 브런치(샐러드바 무제한), 가성비가 좋다는 긍정적 반응이 주를 이룸.",
+  "video_ids": [
+   "BmAMzd9sQ0I"
+  ]
+ },
+ "오아시스80": {
+  "addr_hint": "제주 제주시 애월읍 애월로1길 26-7 가동, 나동 1층",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "부정",
+  "reaction_hint": "댓글 대부분이 카페의 어수선하고 지저분한 상태, 정리되지 않은 인테리어와 위생(화장실·바닥 물웅덩이 등)에 실망했다는 부정적 반응을 보임.",
+  "video_ids": [
+   "6vNi3TOK9BA",
+   "WJz87DTkKUo",
+   "WxdpYUrpjaY",
+   "qUBV0m5IbRA"
+  ]
+ },
+ "이동건 카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들은 주로 영상 속 인물(이동건)에 대한 반응과 방문객 특징(중국인·어르신들 많음), 반려견 동반 불가로 방문 못 한다는 실용적 언급, 그리고 제주막걸리에 대한 개인 취향을 담고 있다.",
+  "video_ids": [
+   "R9TfE6uVaks"
+  ]
+ },
+ "당당": {
+  "addr_hint": "제주시 애월읍 중엄안1길 25",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들은 대체로 맛있다는 반응과 함께 가격이 비싸고 가게가 작아 웨이팅이 길다는 불만을 동시에 표현하고 있다.",
+  "video_ids": [
+   "sF1DtZfr_xw",
+   "JgIAJ5U3MgY"
+  ]
+ },
+ "소길별하": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "영상에 대해 빠르다는 불편감과 과거 방문 여부·예약 문의가 언급됨.",
+  "video_ids": [
+   "bOJjq6ygzYs"
+  ]
+ },
+ "레이지펌프": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "Pvo5_u41YYo"
+  ]
+ },
+ "평균이하": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 가게 이름에 대한 긍정적 반응(칭찬)만 간단히 남겨져 있음.",
+  "video_ids": [
+   "G4eHVKd0h0Q"
+  ]
+ },
+ "제주 애월역": {
+  "addr_hint": "제주 제주시 애월읍 구엄길64, 1층 제주 애월역",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 이곳을 사진 찍기 좋은 포토존 카페로 추천하고 있다.",
+  "video_ids": [
+   "KezH9RhF-x0"
+  ]
+ },
+ "누리프렌즈카페인제주": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 방문 의향과 위치 문의가 주를 이루며, 일부는 캐릭터 상품(귀멸의칼날) 존재 여부를 묻고 있다.",
+  "video_ids": [
+   "Tfq01w4Pt8s"
+  ]
+ },
+ "카페유주": {
+  "addr_hint": "제주 제주시 한림읍 한림상로 17 1층",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "DxPoVNotqzU"
+  ]
+ },
+ "아베베비킬라베이커리": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "방문자들은 빵 종류가 다양하고 맛있다고 칭찬하는 반면 가격에 대해서는 비싸다는 의견이 있다.",
+  "video_ids": [
+   "6cr63ay21Cs"
+  ]
+ },
+ "플로웨이브": {
+  "addr_hint": "제주 제주시 한림읍 장원길 63-12",
+  "hours_hint": "16:00-22:00/ 낙화쇼 8월 매일 진행",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "일부 시청자는 낙화쇼로 인한 환경오염과 영상·실물 차이에 대해 부정적 반응을 보임.",
+  "video_ids": [
+   "RQ6NrqK46I0"
+  ]
+ },
+ "크루아상 처돌이들": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 영상의 음식(크루아상 등)에 대해 맛있어 보인다고 긍정적으로 반응함.",
+  "video_ids": [
+   "EgcRpuFH0dI"
+  ]
+ },
+ "앤트러사이트 한림": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페의 존재와 멋짐을 긍정적으로 인지하는 반응을 보임.",
+  "video_ids": [
+   "Glbrx_2SWTA"
+  ]
+ },
+ "카페 어둑": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "I30m_V0QQdI"
+  ]
+ },
+ "호텔샌드": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "jFwaUhgZRE8"
+  ]
+ },
+ "카페 쉼표": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "뷰는 최고라는 긍정적 평이 있는 반면 메뉴 맛에 대한 부정적 의견이 있다.",
+  "video_ids": [
+   "LLy205pu3v0"
+  ]
+ },
+ "슬랩": {
+  "addr_hint": "제주시 한림읍",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 추천 코스와 방문팁(예약·대기, 이동 시간, 일몰 시간 맞추기 등)을 공유하며 긍정적으로 추천하고 있음.",
+  "video_ids": [
+   "zMhjSc4jwrA"
+  ]
+ },
+ "언더라운지": {
+  "addr_hint": "함덕해수욕장 바로 끼고",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 루프탑·네온 등 분위기와 다양한 음료(술·칵테일·차)에 대한 긍정적 인상을 주로 전하고 방문 의향이나 위치 문의를 하고 있다.",
+  "video_ids": [
+   "Tb55Gqihkbw"
+  ]
+ },
+ "도토관": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 영상에 대해 긍정적으로 감상했다는 반응을 보이고 있다.",
+  "video_ids": [
+   "EYhfSsUfi4U",
+   "XrLTMXR5-Zs"
+  ]
+ },
+ "집나간거북이": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 제주 바다의 분위기와 디저트·음악의 달콤함을 긍정적으로 묘사하고 있습니다.",
+  "video_ids": [
+   "bDEHxTAIH8M"
+  ]
+ },
+ "델문도": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들은 델문도(베이커리)를 긍정적으로 평가하는 반면, 일부는 제주도 전반의 가격(바가지)에 대해 불만을 표하고 있다.",
+  "video_ids": [
+   "ds1f-aChNbQ",
+   "uAAhcamXxBs",
+   "fpmx5PPOZq4"
+  ]
+ },
+ "전이수갤러리 걸어가는늑대들": {
+  "addr_hint": "함덕에서 제주시 연북로 베라체 인근",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 해당 장소가 복합문화공간이자 카페·레스토랑으로 예술 감상과 휴식에 적합하다고 소개하고 있다.",
+  "video_ids": [
+   "BdT04Xi3Jcw",
+   "58ODMcyJHtY"
+  ]
+ },
+ "카페머문": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 짧은 긍정 반응만 보여 방문 의향이나 구체적 정보는 없음.",
+  "video_ids": [
+   "bW0gEx4eQOY"
+  ]
+ },
+ "모래비": {
+  "addr_hint": "제주 제주시 구좌읍 월정리 536-4",
+  "hours_hint": "09:00-18:00",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 카페의 오션뷰와 힐링되는 분위기를 높이 평가하며 방문을 권장합니다.",
+  "video_ids": [
+   "ag9y1cw3vKk"
+  ]
+ },
+ "바람": {
+  "addr_hint": "제주시 구좌읍 월정1길 46-9",
+  "hours_hint": "영업시간 10:00 ~ 18:00 · 정기휴무 매주 월요일 화요일",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "A3nay3KDJwA"
+  ]
+ },
+ "템푸스": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "영상이 힐링된다는 긍정적 반응이 주를 이룸.",
+  "video_ids": [
+   "f-noGooS8WA"
+  ]
+ },
+ "MOUMOON (모우문)": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 제주 풍경과 카페 영상이 힐링된다고 긍정적으로 반응함.",
+  "video_ids": [
+   "vWjTSXRNU0I"
+  ]
+ },
+ "월간레코드": {
+  "addr_hint": "제주 서귀포시 성산읍 일출로 230 2층",
+  "hours_hint": "10:0",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 해당 카페의 분위기(힐링되는 LP청음카페, 바다·성산일출봉 뷰)에 대해 긍정적으로 평가하며 방문 팁(웨이팅·시간 제한)을 공유함.",
+  "video_ids": [
+   "0qlbuI1Ypfw",
+   "Hfkv_Sjf_xc"
+  ]
+ },
+ "구할구": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 날씨 좋은 날 방문해 힐링하고 싶다는 긍정적 반응을 보임.",
+  "video_ids": [
+   "3RpUViapcP0"
+  ]
+ },
+ "정체불명": {
+  "addr_hint": "",
+  "hours_hint": "영업시간 09:00 ~ 18:00",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "Lv2pNfSyT-4"
+  ]
+ },
+ "해일리카페": {
+  "addr_hint": "제주 서귀포시 성산읍 한도로 269-37",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "방문자는 성산일출봉 뷰와 수영장이 있는 카페의 경치와 호캉스 추천에 대해 긍정적으로 평가함.",
+  "video_ids": [
+   "patwfjAMMT8"
+  ]
+ },
+ "카페더라이트": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "KMMS7LzjL40"
+  ]
+ },
+ "카페 오른": {
+  "addr_hint": "제주특별자치도 서귀포시 성산읍 해맞이해안로 2714 orrrn",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글 대부분이 방문 의사와 경치·케이크에 대한 긍정적 반응을 보이며 성수기 혼잡을 언급함.",
+  "video_ids": [
+   "x6YkQ7bOC-8"
+  ]
+ },
+ "카페 쿠리": {
+  "addr_hint": "성산읍 신산리 312-1",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "cbIn4kfwiqo"
+  ]
+ },
+ "제주해일리카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "오랜만에 영상이라 반가워하는 반응과 위치를 묻는 질문이 있음.",
+  "video_ids": [
+   "qLDpl6HcTiQ"
+  ]
+ },
+ "에곤": {
+  "addr_hint": "제주 서귀포시 성산읍 고성리 485-1",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글에선 카페의 예술적 분위기와 영상 속 블라님의 그림·음악 연출이 긍정적으로 호평받고 있으며, 제주 여행에서 미술관 방문 경험을 공유하는 반응이 있음.",
+  "video_ids": [
+   "2RayiuQtN4c"
+  ]
+ },
+ "성산해일리카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 영상에 대해 좋아요와 구독을 표하며 영상이 개인 취향에 맞아 설렘을 느낀다고 표현함.",
+  "video_ids": [
+   "favR7edPyy4"
+  ]
+ },
+ "카페더씨": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 영상의 장소가 예쁘다며 방문 의사를 표현함.",
+  "video_ids": [
+   "9yMvgOBMQcM"
+  ]
+ },
+ "해일리": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 방문 경험과 긍정적 반응을 간단히 표현하고 있음.",
+  "video_ids": [
+   "Bc86dxlreu4"
+  ]
+ },
+ "해일리 카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 바다뷰와 여유로운 카페 분위기를 칭찬하며 제주도 방문 시 가보고 싶어함.",
+  "video_ids": [
+   "WUBpb2yB_sc"
+  ]
+ },
+ "빽가카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "부정",
+  "reaction_hint": "댓글은 해당 카페가 1,800평을 불법 점유하며 운영주가 실제 소유주가 아니라는 제보를 중심으로 우려를 표하고 있다.",
+  "video_ids": [
+   "vRLt34f79a0"
+  ]
+ },
+ "가시림 카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들에서 영상의 풍경과 카페에 대한 긍정적 감탄이 주를 이룸.",
+  "video_ids": [
+   "JDoLMFWvCYc"
+  ]
+ },
+ "택하다, 커피": {
+  "addr_hint": "제주 서귀포시 표선면 원님로652번길 118",
+  "hours_hint": "11:00~18:00(17:40라스트오더)",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "E2so5pxhtcg"
+  ]
+ },
+ "열정의산보": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들에서는 카페의 분위기와 브런치가 예쁘고 치유적이라는 긍정적 인상이 주로 표현됨.",
+  "video_ids": [
+   "FmHtetwUGO8"
+  ]
+ },
+ "엘리펀트힙": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "i2WOtF_Hj1o"
+  ]
+ },
+ "토닥토닥": {
+  "addr_hint": "제주 서귀포시 표선면 일주동로 6573",
+  "hours_hint": "매일 9시 ~ 8시 (1,3번째 화요일 휴무)",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글과 고정댓글은 카페의 바다뷰와 한적한 분위기를 높이 평가하며 제주 여행에서 가보고 싶다는 반응을 보임.",
+  "video_ids": [
+   "-1eLm7QZJCs"
+  ]
+ },
+ "커피가게쉬고가게": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "댓글은 카페에 대한 블로그 리뷰 링크를 공유하며 추가 정보는 웹사이트에서 확인하라는 안내뿐이다.",
+  "video_ids": [
+   "L3JLP7dKmOQ"
+  ]
+ },
+ "더클리프": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 카페 경치가 아름답다며 긍정적으로 반응하고 방문을 응원함.",
+  "video_ids": [
+   "-9eK6NlIDAk"
+  ]
+ },
+ "JW메리어트제주 댄싱두루미": {
+  "addr_hint": "서귀포시 태평로 152 6층",
+  "hours_hint": "11시 ~ 18시",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들은 이 카페의 빵과 분위기가 좋다는 긍정적 평가와 함께 주차 조건·내부에 대한 약간의 아쉬움을 공유하고 있다.",
+  "video_ids": [
+   "iTIMRLMCWw8"
+  ]
+ },
+ "올디벗구디": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글 대부분은 이 카페(빵집)의 분위기·레트로 감성이나 특정 메뉴(크로플, 소금빵)에 대한 호평과 함께 가격 불만(비싸다)도 언급함.",
+  "video_ids": [
+   "hEcRmGqqmho"
+  ]
+ },
+ "더브런치컨셉": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 짧은 긍정적 반응과 현지인 추천을 포함하고 있다.",
+  "video_ids": [
+   "Nok-fkg8cR4"
+  ]
+ },
+ "우도 카페": {
+  "addr_hint": "제주 제주시 우도면 연평리 318 밭318",
+  "hours_hint": "10:00 - 18:00",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 유채꽃 뷰가 아름답고 풍경과 맛이 좋아 방문을 권하는 긍정적 반응이 주를 이룸.",
+  "video_ids": [
+   "zoVCmePkawg",
+   "Cwgo5Y95Rko"
+  ]
+ },
+ "우도 땅콩아이스크림(일반판매처)": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "시청자들이 영상 속 가게의 정확한 상호를 묻는 질문을 반복하고 있음.",
+  "video_ids": [
+   "erA0NVxjOFU"
+  ]
+ },
+ "카페갑준이똘": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 카페 이름을 응원하고 긍정적으로 반응함.",
+  "video_ids": [
+   "jHM1WBf2WvE"
+  ]
+ },
+ "소소샵": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 방문·음식에 대한 구체적 언급 없이 부러움과 축하 표현을 보임.",
+  "video_ids": [
+   "tEWspSTnirU"
+  ]
+ },
+ "카페살레": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페살레의 디저트(특히 우도땅콩카라멜초코케이크와 우도땅콩솔티카라멜아이스크림)를 매우 높게 평가하며 방문을 추천하고 있다.",
+  "video_ids": [
+   "Q-zBMEDmeb0"
+  ]
+ },
+ "블랑로쉐": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 영상의 풍경과 여행에 대한 향수를 표현하며 제작자에게 응원과 연말 인사를 전하고 있다.",
+  "video_ids": [
+   "WageLfFTreA"
+  ]
+ },
+ "우도예쁘다카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "우도땅콩 라떼가 맛있었다는 긍정적 평가가 있음.",
+  "video_ids": [
+   "kDwu_uNftiQ",
+   "hoi-7DNSonY"
+  ]
+ },
+ "원앤온리": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 비오는 날 카페에서 당근치즈케익과 커피를 함께 즐기며 행복해하는 반응을 보임.",
+  "video_ids": [
+   "AribLn4y3LM"
+  ]
+ },
+ "제주시 베이커리 맛집": {
+  "addr_hint": "제주 제주시 노형7길 9-5",
+  "hours_hint": "9:00-18:30",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "제주 토박이도 인정하는 찐 맛집이라는 추천과 함께 포장해 가서 먹으라는 실용적 정보가 공유됨.",
+  "video_ids": [
+   "oki-yL4Gj5I"
+  ]
+ },
+ "민트카페": {
+  "addr_hint": "서귀포시 성산읍 고성리",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "XbzwaDQZa74"
+  ]
+ },
+ "미쁜제과": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "wGtqamp6Q6Q"
+  ]
+ },
+ "델문도 김녕점": {
+  "addr_hint": "제주시 구좌읍 해맞이해안로 140",
+  "hours_hint": "매일 아침 8시 ~ 오후 9시까지",
+  "phone_hint": "010-6454-6068",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "댓글들은 더위 때문에 바로 들어갔을 것 같다는 관찰과 영상 속 행동(티켓 쏘우는 장면)에 대한 가벼운 반응을 보임.",
+  "video_ids": [
+   "7RKflbbIX_c",
+   "y6Ax9g36cNA",
+   "oeJeyaZoRe0"
+  ]
+ },
+ "코우코알라": {
+  "addr_hint": "제주 서귀포시 천제연로 103-15 2층",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 통창으로 보이는 제주 뷰와 진한 밤 바스크 치즈케이크와 드립커피 조합을 추천하며 휴식을 권함.",
+  "video_ids": [
+   "6upjX1Wo9Cs"
+  ]
+ },
+ "담소요": {
+  "addr_hint": "서귀포시 남원읍 신례천로 193",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 담소요를 예쁜 정원과 힐링 가능한 서귀포 감성카페로 추천하고 있다.",
+  "video_ids": [
+   "gBFYOxYg-es"
+  ]
+ },
+ "우미": {
+  "addr_hint": "제주 서귀포시 남원읍 위미대성로 125-46",
+  "hours_hint": "10:00~18:00 / 매주 화요일 휴무",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글과 본문은 케이크와 공간(연못)이 매우 좋다는 긍정적 평가와 겨울에 가보고 싶다는 반응을 표현함.",
+  "video_ids": [
+   "l04To6d8uJs",
+   "kKX_cUuhvwY"
+  ]
+ },
+ "대한목장": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글에는 방문 희망과 게임 관련 친근한 반응, 그리고 부정적 평 하나가 섞여 있음.",
+  "video_ids": [
+   "8YLdTjYCo9U",
+   "abAOef8JGkI"
+  ]
+ },
+ "휴일로": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글에는 방문 의사나 감탄 없이 간단한 긍정적 반응과 부러움 표현만 있음.",
+  "video_ids": [
+   "IjpLIHVZ9z0"
+  ]
+ },
+ "하라케케": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들은 대형 수영장과 오션뷰·한라산·노을 뷰 등 풍경과 발리 감성 분위기에 감탄하며 방문을 추천하고 저장한다는 반응을 보임.",
+  "video_ids": [
+   "wklxF4Uu8KM"
+  ]
+ },
+ "할머니떡집": {
+  "addr_hint": "제주 서귀포시 중앙로42번길 24",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들은 가격 대비 양·가성비에 불만을 표시하는 의견(바가지·비싸다)과 맛있었다는 긍정적 후기들이 혼재함.",
+  "video_ids": [
+   "hHI0-V_PQRs"
+  ]
+ },
+ "서귀피안 베이커리": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페가 휴양지 감성의 핫플레이스라는 긍정적 반응을 보임.",
+  "video_ids": [
+   "m0Sydjx69Wo"
+  ]
+ },
+ "웨이뷰": {
+  "addr_hint": "제주시 한림읍 옹포7길 25-3",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "방문자들은 빵과 음료가 맛있고 좌석이 넉넉해 가족 단위 방문에 좋다고 평함.",
+  "video_ids": [
+   "gbZFUf-jfkk"
+  ]
+ },
+ "제주바움하우스": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 카페가 매우 예쁘다는 긍정적 평가를 담고 있다.",
+  "video_ids": [
+   "mq0TG1vTQ2Q"
+  ]
+ },
+ "플라잉애월": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "시청자들이 분위기를 칭찬하며 가격에 대해 부정적(비싸다) 반응을 보임.",
+  "video_ids": [
+   "hInd5ykR0VQ"
+  ]
+ },
+ "구좌상회": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "부정",
+  "reaction_hint": "댓글에서 방문자가 당근 케익은 맛없다고 평함.",
+  "video_ids": [
+   "oSwwq2sDSDs"
+  ]
+ },
+ "레크레": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "87TXHA25k74"
+  ]
+ },
+ "소색채본": {
+  "addr_hint": "제주 서귀포시 안덕면 사계남로216번길 24-61",
+  "hours_hint": "09:00 ~ 18:00 (매일)",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "유채꽃과 바다뷰가 어우러진 제주의 풍경을 즐길 수 있다는 긍정적 감상",
+  "video_ids": [
+   "hb-YwIx1W6s"
+  ]
+ },
+ "카페젠타일스": {
+  "addr_hint": "제주 서귀포시 표선면 표선당포로 7",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 이곳이 표선해수욕장이 보이는 1~3층 루프탑과 감각적인 타일 인테리어로 분위기가 좋고 천천히 머물기 좋은 카페라고 평가합니다.",
+  "video_ids": [
+   "XeMg22fyxDk"
+  ]
+ },
+ "여누카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페의 외관/분위기가 예쁘다는 긍정적 반응을 보입니다.",
+  "video_ids": [
+   "PAqBEjqJkjk"
+  ]
+ },
+ "레미콘 카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글에는 빵이 맛있어 보이고 공간이 넓어 방문하고 싶다는 긍정적 반응이 있음.",
+  "video_ids": [
+   "-vosfDEVOdU"
+  ]
+ },
+ "이때": {
+  "addr_hint": "제주 서귀포시 대정읍 하모리 765-3",
+  "hours_hint": "10:00 - 22:00",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "LoalioJ_TkA"
+  ]
+ },
+ "나모나모": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "도민이 자주 가며 오후 6시 이후 20% 세일이 있다는 정보 제공.",
+  "video_ids": [
+   "qnqJzet9wjE"
+  ]
+ },
+ "카페루시아": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "짧은 댓글에서 영상과 카페에 대해 긍정적 인상을 보임.",
+  "video_ids": [
+   "7THZ2nIjA3k"
+  ]
+ },
+ "런던베이글뮤지엄": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글들에서는 소개된 베이커리와 오션뷰·시그니처 메뉴 등 추천 정보에 긍정적 반응이 나타나고, 영상 속도에 대한 불만도 있음.",
+  "video_ids": [
+   "DyBjCA8l3oo"
+  ]
+ },
+ "추천빵집 5곳 (상세 미기재)": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글 대부분이 제주 내 다양한 베이커리 추천(소금빵, 초코바게트, 에그타르트 등)과 일부 픽업·직원응대 불만을 공유하며 특정 가게들을 재추천한다.",
+  "video_ids": [
+   "olipW4EenoM"
+  ]
+ },
+ "우정원베이커리카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 해당 카페가 아이와 가기 좋은 대형 카페라는 추천만을 담고 있음.",
+  "video_ids": [
+   "jzXGpKNRkLA"
+  ]
+ },
+ "서귀피안": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 빵이 예쁘고 맛있다는 긍정적 반응과 카페의 규모 변화에 대한 일반적 관찰을 보입니다.",
+  "video_ids": [
+   "QDI2g7zYOuI"
+  ]
+ },
+ "아베베베이커리": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글 대부분은 영상 속 사람이 빵을 매우 맛있게 먹는 모습에 대한 긍정적·감탄 섞인 반응과 건강(단것·당뇨) 걱정이 함께 나타남.",
+  "video_ids": [
+   "VTJV570jPko",
+   "ug24N82mOTk"
+  ]
+ },
+ "애월더선셋 카페&리조트": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "다수 댓글에서 오션뷰와 루프탑 수영장, 플로팅 트레이를 칭찬하며 재방문 의사를 밝히는 등 매우 긍정적인 반응이 주를 이룸.",
+  "video_ids": [
+   "h9RAjkCBnFQ"
+  ]
+ },
+ "카페위유": {
+  "addr_hint": "제주 제주시 해안마을7가길 5 1층",
+  "hours_hint": "08:30 - 16:00 (정기휴무 목)",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글에서 방문을 권하는 긍정적 추천과 가게 정보(주소·영업시간·주차)가 제공됨.",
+  "video_ids": [
+   "GINTbt1aixs"
+  ]
+ },
+ "차롱가게": {
+  "addr_hint": "제주 서귀포시 안덕",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 카페차롱의 3단도시락과 음료, 정원 및 분위기가 매우 훌륭하다는 긍정적 경험을 공유하고 추천하고 있다.",
+  "video_ids": [
+   "0g4Vf90Os4A"
+  ]
+ },
+ "릿": {
+  "addr_hint": "제주 도남동",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "방문자들이 음식이 매우 맛있다고 호평하며 만족한 방문 후기를 남김.",
+  "video_ids": [
+   "_uHCi4MXomw"
+  ]
+ },
+ "애월브런치오": {
+  "addr_hint": "애월브런치오",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "댓글에 위치 표기가 있어 방문장소로 인식됨.",
+  "video_ids": [
+   "BCj8MHZXKq8"
+  ]
+ },
+ "난산리다방": {
+  "addr_hint": "제주 서귀포시 성산읍 난산로41번길 39-2",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 음식과 분위기가 맛있고 예쁘다는 긍정적 반응과 방문 추천을 전달하고 있다.",
+  "video_ids": [
+   "UC9qIQfJMeU",
+   "vZptPw7gE1o"
+  ]
+ },
+ "메리앤커피": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 가성비가 매우 좋고 메뉴 구성이 푸짐하다는 긍정적 평가를 주로 표현하고 있음.",
+  "video_ids": [
+   "EJJU-8r7Hbk"
+  ]
+ },
+ "무릉연화303": {
+  "addr_hint": "산양큰엉곶 도보 5분",
+  "hours_hint": "디너타임 신설(17:00이후)",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "애견 동반과 위치(산양큰엉곶 인접), 메뉴 구성과 디너 시간 신설에 대해 긍정적으로 소개하고 있음.",
+  "video_ids": [
+   "YqyJYwmZP4k"
+  ]
+ },
+ "난사리다방": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 음식이 정말 맛있다는 긍정적 평가를 보입니다.",
+  "video_ids": [
+   "36bfv5Q_VFo"
+  ]
+ },
+ "수키": {
+  "addr_hint": "제주 제주시 노형1길 10 1층",
+  "hours_hint": "화~토요일 10:00 - 17:00 정기휴무 (매주 일,월요일)",
+  "phone_hint": "07-1303-3808",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들은 샌드위치의 묵직한 풍미와 외국식 맛을 높이 평가하며 브런치 장소로 강력 추천하고 있다.",
+  "video_ids": [
+   "lszOAlfV300"
+  ]
+ },
+ "포레스텔라 인 제주": {
+  "addr_hint": "제주 제주시 구좌읍 번영로 2132-6 1층~2층",
+  "hours_hint": "목~화요일 10:00 - 18",
+  "phone_hint": "07-1385-3081",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 넓은 공간과 합리적 가격, 가족·아이 동반하기 좋은 점과 음식·뷰에 대한 긍정적 반응을 중심으로 추천 메뉴와 주변 관광지 정보를 공유하고 있다.",
+  "video_ids": [
+   "Xw6PMjfFIyA"
+  ]
+ },
+ "노을리": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 영상이 예쁘다는 긍정적 반응만 있음.",
+  "video_ids": [
+   "clwHdhMPgJ8",
+   "uK3PvZKixUw"
+  ]
+ },
+ "소이재": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 에그마요샌드위치가 이 카페의 대표 메뉴라는 의견을 전달하고 있다.",
+  "video_ids": [
+   "dYOrua3hUCA"
+  ]
+ },
+ "카페 콜로세움 제주": {
+  "addr_hint": "제주 제주시 민오름길 14 카페 콜로세움 제주",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "방문자는 브런치 메뉴와 항아리 바베큐(특히 참숯 흑돼지바베큐)와 넓고 고급스러운 인테리어를 칭찬하며 추천하고 있다.",
+  "video_ids": [
+   "0bg0S9jaFG8"
+  ]
+ },
+ "풍류라운지 청": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "대체로 가성비와 맛(생망고·우유 얼음)에 대해 긍정적이며 일부는 용기 크기·구성(아이스크림 유무) 등에 아쉬움을 표함.",
+  "video_ids": [
+   "0lmIBQNqBp0"
+  ]
+ },
+ "시소카이막 애월점": {
+  "addr_hint": "제주 제주시 애월읍 애월해안로 566 1층",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "대체로 비싸지만 맛있어 보인다는 반응이 많고, 카이막과 두바이초콜렛의 조합에 대해 호기심 또는 호불호(어울리지 않을 것 같음) 의견이 섞여 있음.",
+  "video_ids": [
+   "91SThaOLuwc",
+   "Z6yziDI4tOg"
+  ]
+ },
+ "안도르": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "추천 채널 운영자가 제주 동쪽 디저트 카페로 '안도르'와 추천 메뉴들을 긍정적으로 소개하고 있다.",
+  "video_ids": [
+   "zRbLtxE7spw"
+  ]
+ },
+ "카페 오놀": {
+  "addr_hint": "제주특별자치도 서귀포시 대포로 174 2층 카페 오놀",
+  "hours_hint": "10:00~18:00 (매주 수목 정기 휴무)",
+  "phone_hint": "07-1353-4564",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "방문자가 빙수의 우유 맛과 딸기 상태를 칭찬하며 강력 추천함.",
+  "video_ids": [
+   "85Kc_voUJM0"
+  ]
+ },
+ "모찌마루": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 영상과 배경음악의 조합이 매우 잘 맞는다고 긍정적으로 평가하고 반복해서 본다는 반응을 보임.",
+  "video_ids": [
+   "-rN6uuWRaYc"
+  ]
+ },
+ "에그타르트 맛집": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 해당 에그타르트가 맛있다는 긍정적 평가를 남기고 있다.",
+  "video_ids": [
+   "gOFslXaVyLs"
+  ]
+ },
+ "청춘부부": {
+  "addr_hint": "제주 서귀포시 대정읍 추사로 38번길 181 1층",
+  "hours_hint": "8:30 ~ 17:00 (라스트오더 16:30)",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "방문자들이 한적한 분위기와 따뜻한 인테리어, 디저트(에그타르트·소금빵)와 음료 맛을 칭찬하며 추천하고 있음.",
+  "video_ids": [
+   "zSLWVqUSY9c"
+  ]
+ },
+ "왕수네": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "OHM1r6pvj1E"
+  ]
+ },
+ "친봉산장": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "댓글에서 방문자들이 가게 이름이 영상 속 장소와 같다는 친근한 반응을 보였습니다.",
+  "video_ids": [
+   "9k3X4yL8i-I"
+  ]
+ },
+ "클로피": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들은 디저트와 커피가 맛있어 보인다고 호평하며, 애견 동반 가능해 제주 방문 시 꼭 가보고 싶다는 반응을 보였습니다.",
+  "video_ids": [
+   "_Hr20ncLrpE"
+  ]
+ },
+ "카페치즈태비": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글 대다수는 대형견 동반에 대한 우려와 반대 입장을 표하며, 일부는 대형견 주인의 입장과 이해를 밝히거나 상생 방안(입마개·목줄)을 제안함.",
+  "video_ids": [
+   "kKOHCANnWo4"
+  ]
+ },
+ "미깡창고": {
+  "addr_hint": "제주 제주시 애월읍 중산간서로 6710-1",
+  "hours_hint": "11:00~18:00(매주 일요일 정기휴무), 17:00(라스트 오더)",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 카페의 위치·영업시간·시설·시그니처 메뉴와 사진찍기 좋은 포인트를 상세히 안내하며 방문을 권유하는 긍정적 정보 중심이다.",
+  "video_ids": [
+   "ZIsGfUzo8zA"
+  ]
+ },
+ "담소요카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페가 좋다는 긍정적 반응과 오리 존재 여부에 대한 궁금증을 보임.",
+  "video_ids": [
+   "LyA3iffbar4"
+  ]
+ },
+ "이끼숲소길 카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "없음",
+  "reaction_hint": "댓글이 매우 적고 단순한 좋아요 반응뿐이라 의미 있는 방문자 의견은 없음.",
+  "video_ids": [
+   "WmFDXKnmwMk"
+  ]
+ },
+ "콜로세움": {
+  "addr_hint": "제주 제주시 민오름길 14 카페 콜로",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 해당 카페(콜로세움)의 다양한 메뉴와 이국적인 분위기, 편리함을 칭찬하며 방문을 추천하고 있다.",
+  "video_ids": [
+   "ROmEzUJlX54"
+  ]
+ },
+ "안티코": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페의 엔틱하고 동화 같은 분위기, 야외정원과 디저트·음료(로즈애플티, 안티코선셋)를 칭찬하며 방문 의향을 보임.",
+  "video_ids": [
+   "F-WNDWp1tL4"
+  ]
+ },
+ "유지커피웍스": {
+  "addr_hint": "오라이동",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 카페의 넓은 규모와 경치, 제과기능장의 빵과 직접 로스팅한 커피, 음료들의 맛(계피향·부드러움)을 긍정적으로 소개하고 있음.",
+  "video_ids": [
+   "q9WXgUYnKUE"
+  ]
+ },
+ "이끼숲소길": {
+  "addr_hint": "제주 제주시 애월읍 장소로 621",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글에는 경치가 좋고 퇴근길에 가는 단골이라는 긍정적 반응이 있음.",
+  "video_ids": [
+   "s-5BusTleJg"
+  ]
+ },
+ "수퍼플라워": {
+  "addr_hint": "제주시 구좌읍 동복로 85 지하1층",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "위치 정보와 주변 코스 추천 중심의 실용적 안내가 제공됨.",
+  "video_ids": [
+   "3nG1b8rhm6E"
+  ]
+ },
+ "피노스커피": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "-vSN51r6qEc"
+  ]
+ },
+ "메종메르미누": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페의 분위기와 프랑스식 디저트·커피를 칭찬하며 방문 의향을 표현하고 있다.",
+  "video_ids": [
+   "LuOXiZUIlnw"
+  ]
+ },
+ "Noeully Cafe": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 출연자 정동원에 대한 응원과 찬사뿐이며 카페 관련 정보는 없음.",
+  "video_ids": [
+   "Bl0WJYg63Bk"
+  ]
+ },
+ "애월빵공장": {
+  "addr_hint": "제주 제주시 애월읍 금성5길 42-15",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "방문자들은 빵의 비주얼과 맛을 칭찬하며 넓은 좌석과 아이들 놀이터, 해변 인접성 때문에 가족 방문에 좋다고 평가합니다.",
+  "video_ids": [
+   "cWn1goAdZp8"
+  ]
+ },
+ "콩카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "시청자들은 곽지해수욕장의 조용하고 좋은 분위기를 긍정적으로 회상하면서 최근에 방문객이 다시 늘고 있다는 아쉬움을 표현함.",
+  "video_ids": [
+   "a8pToLyvW2g",
+   "U4aFh5Fuh6c"
+  ]
+ },
+ "카페팀블로우": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "Spx0JOUIBH0"
+  ]
+ },
+ "더모먼트": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 카페 전반에 대한 긍정적 감탄을 표현하고 있음.",
+  "video_ids": [
+   "meiryhEWGlM"
+  ]
+ },
+ "김녕해수욕장": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "c59yTP7DtyE"
+  ]
+ },
+ "탐앤탐스 김녕아쿠아점": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "시청자가 카페 위치를 묻고 있음.",
+  "video_ids": [
+   "-zdd2GB46I8"
+  ]
+ },
+ "탐앤탐스김녕아쿠아점": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 대형 수족관과 다양한 제주산 어종이 있는 카페라는 점을 칭찬하고, 오션뷰와 함께 물고기 관찰이 즐겁다는 긍정적 반응을 보임.",
+  "video_ids": [
+   "6uhmuB7_dJQ"
+  ]
+ },
+ "청굴물 카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들은 영상의 촬영(항공샷)과 음료의 차가움에 대한 긍정적 반응을 보임.",
+  "video_ids": [
+   "dPLyHuz7tE0"
+  ]
+ },
+ "탐앤탐스 김녕점": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들이 카페에 대해 긍정적이고 즐거운 반응을 보임.",
+  "video_ids": [
+   "61tEuTiNB-0"
+  ]
+ },
+ "김녕빵집": {
+  "addr_hint": "",
+  "hours_hint": "평일 오픈 시간에 가서 사람이 별로 없었지만 주말에는 웨이팅 있습니다",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "방문자가 평일에는 한적했으나 주말에는 웨이팅이 있다고 알려줌.",
+  "video_ids": [
+   "WHcf1nwzvOg"
+  ]
+ },
+ "카페공작소": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "",
+  "reaction_hint": "",
+  "video_ids": [
+   "6b26hWGk6_c"
+  ]
+ },
+ "카페 한라산": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "댓글에서 장소를 묻는 질문이 있다.",
+  "video_ids": [
+   "zE6kOu-QJ2s"
+  ]
+ },
+ "카페한라산": {
+  "addr_hint": "제주 제주시 구좌읍 하도리 3200-9",
+  "hours_hint": "9:30 ~ 21:00",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페 위치·영업시간·주차정보를 공유하고, 방문자 반응은 긍정적이다.",
+  "video_ids": [
+   "Zej5VgJ41UQ"
+  ]
+ },
+ "텐더럽카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글에서 카페가 귀엽다는 긍정적 반응과 상호명을 찾는 질문이 보임.",
+  "video_ids": [
+   "uOUlXaAmnIM"
+  ]
+ },
+ "달치즈 구좌세화점": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글에서 방문 의사와 칭찬이 나타나며, 일부는 지역(갯거시) 관련 회상 섞인 반응이 있음.",
+  "video_ids": [
+   "pWIAmFDGQbw"
+  ]
+ },
+ "트라인카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "댓글은 영상 속 인물이 혼자 있는 상황에 대해 누굴 기다리는지 궁금해하는 반응을 보임.",
+  "video_ids": [
+   "04XDn3vNoyo"
+  ]
+ },
+ "카페점점": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 초당옥수수 아이스크림이 매우 맛있다는 긍정적 반응을 보이고 있다.",
+  "video_ids": [
+   "CN6nLnj8Y2E"
+  ]
+ },
+ "월향재": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 빙수, 특히 말차(말창) 빙수에 대해 맛있어 보인다는 긍정적 반응을 보임.",
+  "video_ids": [
+   "VwpiW7sO7_4",
+   "Ax9iloNtQM8"
+  ]
+ },
+ "카페 아티나": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페 외관·분위기가 예쁘고 해외 느낌이 난다는 긍정적 인상을 표현하며 위치 정보를 묻는 의견이 있음.",
+  "video_ids": [
+   "dFmymfqfJaM"
+  ]
+ },
+ "아담원": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 카페의 규모와 풍경에 대해 감탄하는 긍정적 반응을 보임.",
+  "video_ids": [
+   "EtLePuhHbx8"
+  ]
+ },
+ "빈타이 카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "시청자들이 더운 날씨를 걱정하며 건강을 챙기라는 반응과, 빈타이가 원래 붐비는 곳이라 방송 이후 더 혼잡해질 것이라는 우려를 보임.",
+  "video_ids": [
+   "Araz9w3Jg-I"
+  ]
+ },
+ "수국카페": {
+  "addr_hint": "남원광한루원에서 차로 30분 거리 / 가는 길도 지리산국립공원 산도로",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "시청자들이 경치와 장소를 칭찬하며 드라이브 코스도 추천함.",
+  "video_ids": [
+   "cvwiC3ZqpU0"
+  ]
+ },
+ "나그네의 주머니": {
+  "addr_hint": "전북특별자치도 남원시 동헌길 9-1(용남시장 후문 주차장 바로 맞은편)",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글은 카페의 아늑하고 따뜻한 분위기와 커피 한 잔의 여유를 칭찬하고 있습니다.",
+  "video_ids": [
+   "nvKJsgpXyCM"
+  ]
+ },
+ "규화원": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "방문 가능 여부(규화목 구경)와 현재 영업 상태를 묻는 문의가 있다.",
+  "video_ids": [
+   "n3vvMf6A_Xg"
+  ]
+ },
+ "카페Wiee (카페위이)": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글 한 건이 카페의 분위기가 매우 좋다는 긍정적 평가를 표현함.",
+  "video_ids": [
+   "Z4lgBysIkqw"
+  ]
+ },
+ "서연의 집": {
+  "addr_hint": "서귀포시 남원읍 위미리",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "중립",
+  "reaction_hint": "매물 정보와 조건을 상세히 안내하는 댓글이 있음.",
+  "video_ids": [
+   "PtcwYfBzzmk"
+  ]
+ },
+ "요미랑": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "짧은 긍정적 반응(귀엽다는 표현).",
+  "video_ids": [
+   "SkcPPQSuut0"
+  ]
+ },
+ "카페사계": {
+  "addr_hint": "경남 김해시 대청계곡길 313-21 A동",
+  "hours_hint": "매일 10:30-20:30",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "방문자들이 부모님과 함께 가기 좋다는 긍정적 반응과, 과거에는 고기집이었다는 제보성 댓글이 혼재함.",
+  "video_ids": [
+   "XKhL610lR-w",
+   "3jdwkf6ieCs"
+  ]
+ },
+ "나솔사계": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "부정",
+  "reaction_hint": "대부분 댓글이 사장(장미)의 불친절·무례한 태도와 인성 문제를 지적하며 해당 카페에 가지 않겠다거나 폐업을 예상하는 부정적 반응을 보임.",
+  "video_ids": [
+   "e6Xziy2c44s"
+  ]
+ },
+ "부젤라또": {
+  "addr_hint": "서귀포시 안덕면 형제해안로 32",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "주차 언급 있음(댓글)",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 부젤라또의 수제 젤라또 맛과 고급 장비·기술에 호기심과 칭찬을 보이며 방문 권유를 하고 있다.",
+  "video_ids": [
+   "NlYGzf2vhw4",
+   "LRcoMWDZVgk"
+  ]
+ },
+ "카페네이처": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "혼합",
+  "reaction_hint": "댓글 대다수는 '밀양' 위치에 관한 혼동이나 거리(창원·부산·양산에서의 접근성)를 언급하고 일부가 해당 장소를 긍정적으로 추천함.",
+  "video_ids": [
+   "K7MKuRAgbL4"
+  ]
+ },
+ "젠하이드어웨이": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 음식(똠냥꿍)을 칭찬하고 영상이 행복감을 준다는 긍정적 반응을 보입니다.",
+  "video_ids": [
+   "o6BgPc_4vPE"
+  ]
+ },
+ "봉리단길카페": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 카페와 팬케이크·케이크의 비주얼과 분위기가 좋다는 긍정적 반응과 방문 희망을 나타냅니다.",
+  "video_ids": [
+   "bs7Ob9XPd14"
+  ]
+ },
+ "미쁜정": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "오랜 기간 방문해 빵을 사러 다녔다는 단골 경험을 공유함.",
+  "video_ids": [
+   "wU27b-ms7KI"
+  ]
+ },
+ "블루웨일": {
+  "addr_hint": "",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "중립",
+  "reaction_hint": "시청자가 장소(위치)를 궁금해함.",
+  "video_ids": [
+   "eUDPoJz37fA"
+  ]
+ },
+ "제주포슬": {
+  "addr_hint": "대정맛집",
+  "hours_hint": "",
+  "phone_hint": "",
+  "parking_hint": "",
+  "reaction_tone": "긍정",
+  "reaction_hint": "댓글들은 제주포슬의 과일 케이크(무화과·망고 등) 맛과 가성비를 칭찬하며 성심당과 비교하는 논쟁을 주로 다루고 있다.",
+  "video_ids": [
+   "oEG0axFgpso"
+  ]
+ }
+}

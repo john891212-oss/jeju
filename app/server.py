@@ -59,7 +59,8 @@ def _blank():
             "summary_youtube": "", "summary_blog": "",
             "blog_links": [], "bloggers": 0, "_rich": 9,
             "lat": None, "lng": None,
-            "caution": [], "hours_hint": ""}
+            "caution": [], "hours_hint": "",
+            "reaction_tone": "", "reaction_hint": ""}
 
 def _load_aux():
     aux = {}
@@ -131,6 +132,19 @@ def _load_aux():
             a["tags"].update(lab.get("tags_seed") or [])
             a["caution"] = lab.get("caution") or []
             a["hours_hint"] = lab.get("hours_hint") or ""
+    # 댓글 정보 슬롯 + 반응 (2026-07-09): 📍고정댓글 발 — 빈 슬롯만 채움 (힌트 등급)
+    # 반응은 결정 20대로 임베딩 금지 — 카드 표시 + LLM 선별 입력만. 발굴 카페엔 근거 영상도 연결
+    cp = os.path.join(ROOT, "data", "processed", "댓글부가.json")
+    if os.path.exists(cp):
+        for n, lab in json.load(open(cp, encoding="utf-8")).items():
+            a = aux.setdefault(n, _blank())
+            if not a["hours_hint"] and lab.get("hours_hint"):
+                a["hours_hint"] = lab["hours_hint"] + " (댓글)"
+            a["reaction_tone"] = lab.get("reaction_tone", "")
+            a["reaction_hint"] = lab.get("reaction_hint", "")
+            for v in lab.get("video_ids") or []:
+                if v not in a["video_ids"]:
+                    a["video_ids"].append(v)
     return aux
 
 AUX = _load_aux()
@@ -321,7 +335,9 @@ _LLM_SYS = (
     '형식: {"intro": "질문에 대한 1~2문장 응답", "picks": [질문에 맞는 순서대로 i 배열], '
     '"reasons": {"0": "그 카페를 추천하는 이유 한 줄", ...}}\n'
     "규칙:\n"
-    "- 각 카페의 summary/tags에 적힌 내용만 근거로 쓸 것. 없는 사실을 지어내지 말 것.\n"
+    "- 각 카페의 summary/tags/reaction에 적힌 내용만 근거로 쓸 것. 없는 사실을 지어내지 말 것.\n"
+    "- reaction은 실제 방문자 댓글 여론이다. 질문과 충돌하면(예: '조용한 카페' 질문인데 자리싸움·혼잡 반응) "
+    "순위를 낮추고, 중요한 경고는 reason에 짧게 반영해도 된다. 여론을 미화하지 말 것.\n"
     "- 질문과 무관한 카페는 picks에서 빼도 된다. 단 name_match=true 카페는 항상 포함.\n"
     "- reasons는 근거가 있는 카페만. 이유는 담백하게, 과장 광고체 금지.")
 
@@ -330,7 +346,9 @@ def _llm_annotate(q, cards):
     items = [{"i": i, "name": c["spot_name"], "region": c["region"],
               "name_match": bool(c.get("name_match")),
               "tags": (c.get("tags") or [])[:8],
-              "summary": (c.get("summary_blog") or c.get("summary_youtube") or "")[:220]}
+              "summary": (c.get("summary_blog") or c.get("summary_youtube") or "")[:220],
+              # 반응(댓글 여론) — 수치 아닌 내용 신호라 입력 허용 (결정 20·25). 부정·혼합은 선별에 반영
+              "reaction": (c.get("reaction_hint") or "")[:100]}
              for i, c in enumerate(cards)]
     resp = client.chat.completions.create(
         model="gpt-5-mini",
@@ -554,6 +572,8 @@ def search(q: str, k: int = 8, explain: int = 1):
                       "bloggers": a.get("bloggers", 0),
                       "caution": a.get("caution", []),
                       "hours_hint": a.get("hours_hint", ""),
+                      "reaction_tone": a.get("reaction_tone", ""),
+                      "reaction_hint": a.get("reaction_hint", ""),
                       "lat": a.get("lat"), "lng": a.get("lng")})
 
     # [2.5+3] LLM 선별+이유 — 브라우즈는 지분 순서 유지(주석만), 조건 질의는 재정렬 허용
