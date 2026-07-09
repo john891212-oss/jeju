@@ -142,6 +142,11 @@
   @keyframes ytspin{ to{ transform:rotate(360deg) } }
   /* 이름 일치 배지 (name_match — 유사도 아닌 확정 매치) */
   .namematch{ display:inline-block; font-size:11px; font-weight:600; color:#0071e3; background:#eaf3ff; padding:1px 7px; border-radius:6px; margin-left:6px; vertical-align:middle; white-space:nowrap }
+  /* 파도7: 폐업 배지 (closed — 이름 조회 시에만 등장, 지도 마커에선 제외) */
+  .closedbadge{ display:inline-block; font-size:11px; font-weight:700; color:#dc2626; background:#fee2e2; padding:1px 7px; border-radius:6px; margin-left:6px; vertical-align:middle; white-space:nowrap }
+  /* 파도7: 추천 근거 (matched — "왜 이 카페"를 코드가 결정적으로 조립: 지역✓·질의와 겹친 태그·블로거 수. LLM reason의 후임 — 지어낼 수 없는 이유만) */
+  .matched{ font-size:12px; font-weight:600; color:#0071e3; margin-top:5px; line-height:1.45 }
+  .matched .rok{ color:#16a34a; font-weight:700 }   /* 지역 일치 표식 ✓ */
   /* 검색 로딩 스켈레톤 (검색 2~6초 대비) */
   .track.skel{ pointer-events:none }
   .sk, .sk-line{ background:linear-gradient(90deg,#ececf0 25%,#f6f6f8 50%,#ececf0 75%); background-size:200% 100%; animation:skshimmer 1.25s ease-in-out infinite }
@@ -486,6 +491,7 @@ function plotCards(cards, fit = true){
   const seedByName = {};
   (window.JEJU_CARDS||[]).forEach(c => { if (c.lat && c.lng && !seedByName[c.spot_name]) seedByName[c.spot_name] = c; });
   (cards || []).forEach((card, idx) => {
+    if (card.closed) return;                    // 파도7: 폐업 카페는 지도에 안 찍음 (검색결과 카드엔 배지로 남김)
     let lat = card.lat, lng = card.lng;
     if (!(lat && lng)) {                        // 백엔드가 좌표를 안 주면 cards.js에서 이름으로 보충
       const seed = seedByName[card.spot_name];
@@ -636,6 +642,16 @@ function trackHTML(t){
   const badge = vid ? '▶ 영상' : (blogLink ? '📝 후기' : '');
   const evidence = `영상 ${c.mention_count}편` + (c.bloggers ? ` · 후기 ${c.bloggers}명` : '');
   const nameMatch = c.name_match ? '<span class="namematch">📌 이름 일치</span>' : '';   // 확정 매치 배지
+  const closedBadge = c.closed ? '<span class="closedbadge">⚠ 폐업한 곳이에요</span>' : '';   // 파도7: 폐업 안내(이름 조회 시만 등장 — 지우면 모르고 찾아가니 안내가 신뢰)
+  // 파도7: 추천 근거 — 지어낼 수 없는 것만 조립(지역 일치·질의와 겹친 태그·블로거 수). LLM reason의 후임. 없으면 안 그림.
+  const matched = (function(m){
+    if(!m) return '';
+    const parts = [];
+    if(m.region) parts.push(`${esc(m.region)} <span class="rok">✓</span>`);
+    if(m.tags && m.tags.length) parts.push(m.tags.map(esc).join('·'));
+    if(m.bloggers) parts.push(`블로거 ${m.bloggers}명 언급`);
+    return parts.length ? `<div class="matched">${parts.join(' · ')}</div>` : '';
+  })(c.matched);
   const tags = (c.tags||[]).slice(0,3).map(x=>'#'+esc(x)).join(' ');
   // 파도2: 주의 신호(주차·웨이팅) / 영업시간 힌트 — 없으면 안 그림
   const caution = (c.caution && c.caution.length)
@@ -662,7 +678,7 @@ function trackHTML(t){
       ${ytThumbHTML(vid, 'thumb')}
       ${badge ? `<span style="position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px">${badge}</span>` : ''}
     </a>
-    <div class="body"><div class="tn">${esc(c.spot_name)}${nameMatch}</div><div class="td">${esc(t.why)}</div><div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div>${reaction}${caution}${hours}${evBtn}</div>
+    <div class="body"><div class="tn">${esc(c.spot_name)}${nameMatch}${closedBadge}</div><div class="td">${esc(t.why)}</div>${matched}<div style="font-size:12px;color:#86868b;margin-top:4px">${tags}</div>${reaction}${caution}${hours}${evBtn}</div>
     <div class="ev"><div class="n">${evidence}</div>${reviewRate}<div class="k">${esc(c.region)} · ${esc(c.category)}</div></div>
   </div>`;
 }
@@ -677,7 +693,7 @@ async function apiSearch(query, topK){
   // 백엔드가 이미 정렬(name_match 1순위)해서 보냄 — 프론트에서 재정렬·중복제거 금지 (계약 v2)
   const cards = d.cards.map(c => ({
     spot_name: c.spot_name,
-    region: c.region_fine || c.region || '', category: '카페',   // 세부 우선 (백엔드 주소기반 교정값)
+    region: c.region_fine || c.region || '', category: c.category || '카페',   // 세부 우선(백엔드 주소기반 교정값) · 파도7: category=카카오 카테고리 말단(디저트카페 등)
     region_bucket: c.region_bucket || '', region_fine: c.region_fine || '',
     tags: c.tags || [], summary: c.summary_blog || c.summary_youtube || '',
     mention_count: c.mention_count || 0, video_ids: c.video_ids || [],
@@ -693,6 +709,10 @@ async function apiSearch(query, topK){
     review_tone: c.review_tone || '',          // 파도6: 리뷰 여론 톤 — 쇼츠 반응과 별개 소스(화제≠만족)
     score: c.score,                            // 브라우즈는 0.0 (유사도 아님) — 표시 판단용
     lat: c.lat, lng: c.lng,                    // 네이버 지역검색 좌표 — plotCards가 직접 사용
+    place_id: c.place_id || null,              // 파도7: 카카오 place_id(지도·사진 정확도용, 없으면 null)
+    address: c.address || '',                  // 파도7: 도로명 주소 (없으면 빈 문자열 → 미표시)
+    closed: c.closed === true,                 // 파도7: 폐업 — 이름 조회 시에만 옴. 경고 배지 + 지도 마커 제외
+    matched: c.matched || null,                // 파도7: "왜 추천" 결정적 근거 {region?,tags?,bloggers?} — 없으면 null(안 그림)
   }));
   // 카드 배열 + 최상위 메타를 함께 반환 — runSearch가 결과 헤더에 사용 (파도3: intro/browse/total, 파도5: filtered)
   return { cards, intro: d.intro || '', browse: d.browse === true,
