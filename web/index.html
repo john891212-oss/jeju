@@ -685,7 +685,7 @@ function trackHTML(t){
 }
 // ── 임베딩 검색 API — 백엔드 없으면 mock으로 자동 폴백 ──
 // 배포/통합서버(프론트+API 한 서버)는 같은 오리진 → 상대경로(''). 로컬에서 프론트만 :8503 으로 띄운 옛 방식만 8000 백엔드로.
-const API_BASE = (location.port === '8503') ? 'http://localhost:8000' : '';
+const API_BASE = (location.port === '8503') ? 'http://localhost:8000' : location.origin;  // new URL()은 절대주소 필요 → 배포도 오리진 사용(상대경로 '' 금지, 2026-07-10 버그수정)
 async function apiSearch(query, topK){
   const r = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}&k=${topK}`,
                         { signal: AbortSignal.timeout(20000) });   // 파도3 LLM 선별+이유 층: 조건검색 실측 ~6초, 브라우즈(12곳) 8~11초 → 스파이크 여유 20초

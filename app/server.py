@@ -459,6 +459,7 @@ def search(q: str, k: int = 8, explain: int = 0, debug: int = 0):
     relaxed = False
     total = None
     emb_debug = None
+    gated = 0  # 어휘 매칭 게이트로 걸러진 카페 수 (debug 관찰용)
 
     if browse:
         # 브라우즈: 빈 질의는 유사도가 노이즈 — 임베딩 생략, 다수결(union 블로거) 정렬 (원칙 8)
@@ -510,7 +511,6 @@ def search(q: str, k: int = 8, explain: int = 0, debug: int = 0):
         # pinned(이름 조회)는 예외 — 이미 ordered로 분리됨. 조건어 없으면 게이트 비활성(통과).
         # 전멸 시 pool=0 → 지역완화(relaxed)도 0 → cards 빈 배열 → 프론트가 "못 찾았어요"로 침묵.
         term_groups = _terms(q)
-        gated = 0
         if term_groups:
             before = len(spots)
             spots = {n: s for n, s in spots.items() if _grounded(n, term_groups)}
@@ -547,6 +547,8 @@ def search(q: str, k: int = 8, explain: int = 0, debug: int = 0):
         out["debug"] = {
             "route": "조회" if pinned else ("브라우즈" if browse else "조건"),
             "region": {"detected": region, "bucket": want_b, "fine": want_f, "relaxed": relaxed},
+            "gated": gated,  # 어휘 매칭 게이트로 걸러진 무관 카페 수 (조건검색만)
+            "terms": _terms(q),
             "pinned": pinned,
             "embedding": ({"n_docs": len(emb_debug),
                            "n_unique_cafes": len({d["spot_name"] for d in emb_debug}),
